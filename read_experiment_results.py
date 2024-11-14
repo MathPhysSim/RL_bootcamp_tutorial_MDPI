@@ -1,4 +1,7 @@
 # TODO: save data for accelerated verification in the verification functions
+
+
+# TODO: think about overall structure of storing results
 import os
 import pickle
 
@@ -7,7 +10,7 @@ from matplotlib import pyplot as plt
 # from Compare_different_approaches import experiment_name
 from environment.environment_helpers import read_experiment_config, load_env_config
 # Importing required functions and classes
-from helper_scripts.general_helpers import verify_external_policy_on_specific_env, make_experiment_folder, \
+from helper_scripts.general_helpers import verify_external_policy_on_specific_env, prepare_experiment_folder, \
     run_specific_test
 
 environment_settings = read_experiment_config('config/environment_setting.yaml')
@@ -21,11 +24,11 @@ nr_validation_episodes = len(validation_seeds)  # Number of validation episodes
 env = load_env_config(env_config='config/environment_setting.yaml')
 optimization_type = 'random_walk'
 algorithm = 'random_policy'
-experiment_name = 'noise_tests'
+experiment_name = 'my_fist_noise_test'
 
 # save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Figures')
-save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, experiment_name=experiment_name)
-save_results_name = os.path.join(save_folder_results, 'Results.pkl')
+save_folder_results = prepare_experiment_folder(optimization_type, algorithm, environment_settings, experiment_name=experiment_name)
+save_results_name = os.path.join(save_folder_results, 'results.pkl')
 
 print(save_results_name)
 
@@ -57,7 +60,7 @@ for _ in range(5):
 # Let's plot the episode lengths for simplicity. Adapt this for other metrics as needed.
 plt.figure(figsize=(10, 5))
 for i, ep_lengths in enumerate(ep_len_per_task):
-    plt.plot(ep_lengths, label=f'Task {i+1}')
+    plt.plot(ep_lengths, label=f'Task {i+1}', drawstyle='steps-pre', linewidth=2)
 
 plt.title('Episode Lengths per Task')
 plt.xlabel('Episode')

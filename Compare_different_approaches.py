@@ -3,7 +3,7 @@ import os
 import numpy as np
 from environment.environment_helpers import read_experiment_config, load_env_config, get_model_parameters
 from helper_scripts.MPC import model_predictive_control
-from helper_scripts.general_helpers import make_experiment_folder, verify_external_policy_on_specific_env_regret, \
+from helper_scripts.general_helpers import prepare_experiment_folder, verify_external_policy_on_specific_env_regret, \
     load_latest_policy
 
 # ToDo: store the trajectories of the MPC policy
@@ -46,8 +46,8 @@ save_folder = os.path.join('results', 'comparison', experiment_name, 'Figures', 
 os.makedirs(save_folder, exist_ok=True)
 
 # Define the save folder for results
-save_folder_results = make_experiment_folder('MPC', '', environment_settings,
-                                             task_name='MPC_results', generate=False)
+save_folder_results = prepare_experiment_folder('MPC', '', environment_settings,
+                                                task_name='MPC_results', generate=False)
 save_folder_name_results = os.path.join(save_folder_results, 'MPC_results.pkl')
 
 # Check if save_folder_name_results exists

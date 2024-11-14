@@ -8,7 +8,7 @@ from stable_baselines3 import PPO
 from tqdm import tqdm
 
 from environment.environment_helpers import load_env_config, read_experiment_config
-from helper_scripts.general_helpers import make_experiment_folder, plot_progress, \
+from helper_scripts.general_helpers import prepare_experiment_folder, plot_progress, \
     verify_external_policy_on_specific_env
 
 # Todo: Make plots interactive!!!
@@ -47,8 +47,8 @@ nr_validation_episodes = len(validation_seeds)  # Number of validation episodes
 # Select on algorithm
 algorithm = environment_settings['rl-settings']['algorithm']
 optimization_type = 'RL'
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
-save_folder_weights = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Weights', delete=True)
+save_folder_figures = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_weights = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Weights', delete=True)
 
 
 if algorithm == 'TRPO':

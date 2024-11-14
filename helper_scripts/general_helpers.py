@@ -23,7 +23,7 @@ from typing import Any, Dict
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def make_experiment_folder(
+def prepare_experiment_folder(
     optimization_type: str,
     algorithm: str,
     environment_settings: Dict[str, Any],
@@ -65,10 +65,6 @@ def make_experiment_folder(
         algorithm,
         experiment_name)
 
-    experiment_settings_name = os.path.join(base_folder, 'experiment_settings.pkl')
-    with open(experiment_settings_name, "wb") as f:
-        pickle.dump(environment_settings, f)
-
     save_folder = os.path.join(
         'results',
         optimization_type,
@@ -94,6 +90,10 @@ def make_experiment_folder(
         except OSError as e:
             logger.error(f"Error creating folder {save_folder}: {e}")
             raise
+
+    experiment_settings_name = os.path.join(base_folder, 'experiment_settings.pkl')
+    with open(experiment_settings_name, "wb") as f:
+        pickle.dump(environment_settings, f)
 
     return save_folder
 
@@ -510,8 +510,8 @@ def load_latest_policy(environment_settings):
     algorithm = environment_settings['rl-settings']['algorithm']
 
     # Construct the save folder path for weights
-    save_folder_weights = make_experiment_folder(optimization_type, algorithm, environment_settings,
-                                                 task_name='Weights', generate=False)
+    save_folder_weights = prepare_experiment_folder(optimization_type, algorithm, environment_settings,
+                                                    task_name='Weights', generate=False)
     # Get the list of files in the weights folder
     files = glob.glob(os.path.join(save_folder_weights, '*'))
     files.sort()

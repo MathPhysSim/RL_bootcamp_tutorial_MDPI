@@ -22,7 +22,7 @@ import os
 
 from environment.environment_helpers import read_experiment_config, load_env_config
 # Importing required functions and classes
-from helper_scripts.general_helpers import verify_external_policy_on_specific_env, make_experiment_folder
+from helper_scripts.general_helpers import verify_external_policy_on_specific_env, prepare_experiment_folder
 
 environment_settings = read_experiment_config('config/environment_setting.yaml')
 
@@ -36,8 +36,8 @@ env = load_env_config(env_config='config/environment_setting.yaml')
 optimization_type = 'random_walk'
 algorithm = ''
 
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
-save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Random walk')
+save_folder_figures = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_results = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Random walk')
 save_name_results = os.path.join(save_folder_results, 'Random_walk_results.pkl')
 
 print(save_name_results)

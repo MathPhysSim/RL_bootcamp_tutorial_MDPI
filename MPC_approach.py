@@ -23,7 +23,7 @@ import os
 from environment.environment_helpers import read_experiment_config, get_model_parameters, load_env_config
 # Importing required functions and classes
 from helper_scripts.MPC import model_predictive_control
-from helper_scripts.general_helpers import verify_external_policy_on_specific_env, make_experiment_folder
+from helper_scripts.general_helpers import verify_external_policy_on_specific_env, prepare_experiment_folder
 
 environment_settings = read_experiment_config('config/environment_setting.yaml')
 
@@ -49,8 +49,8 @@ policy_mpc = lambda x: model_predictive_control(x, mpc_horizon, action_matrix_sc
 optimization_type = 'MPC'
 algorithm = ''
 
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
-save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='MPC_results')
+save_folder_figures = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_results = prepare_experiment_folder(optimization_type, algorithm, environment_settings, task_name='MPC_results')
 save_name_results = os.path.join(save_folder_results, 'MPC_results.pkl')
 
 # Verify the external policy on the specific environment
