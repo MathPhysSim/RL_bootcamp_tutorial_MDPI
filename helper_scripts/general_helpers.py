@@ -74,6 +74,7 @@ def prepare_experiment_folder(
         f'Dof_{degrees_of_freedom}'
     )
 
+
     if delete:
         if os.path.exists(save_folder):
             try:

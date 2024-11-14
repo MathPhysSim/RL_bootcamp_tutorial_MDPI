@@ -105,7 +105,6 @@ class DoFWrapper(gym.Wrapper):
 
         # Generate observation noise
         if hasattr(self, 'noise_sigma') and self.noise_sigma is not None:
-            print('Noise added')
             observation_noise = np.zeros_like(observation)  # Ensure noise shape matches observation
             # Apply Gaussian noise to the first 'DoF' elements of the observation
             noise = np.random.randn(self.DoF) * self.noise_sigma
