@@ -98,7 +98,7 @@ rl-settings:
 # Note: Modify these settings only if necessary.
 noise_setting:
   # Standard deviation of noise added to observations. Set to 'none' to disable noise.
-  std_noise: none
+  std_noise: 0.5
 
 # Initial Scaling: Scaling factor applied to initial observations to normalize state values.
 init_scaling: 0.9

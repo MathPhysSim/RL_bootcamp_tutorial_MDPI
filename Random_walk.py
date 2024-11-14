@@ -36,8 +36,8 @@ env = load_env_config(env_config='config/environment_setting.yaml')
 optimization_type = 'random_walk'
 algorithm = ''
 
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Figures')
-save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Random walk')
+save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Random walk')
 save_name_results = os.path.join(save_folder_results, 'Random_walk_results.pkl')
 
 print(save_name_results)

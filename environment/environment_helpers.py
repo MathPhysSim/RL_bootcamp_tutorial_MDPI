@@ -46,7 +46,9 @@ class DoFWrapper(gym.Wrapper):
         self.env.init_scaling = kwargs.get("init_scaling", 1.0)
         self.action_scale = kwargs.get("action_scale", 1.0)
         self.penalty_scaling = kwargs.get("penalty_scaling", 1.0)
-
+        noise_setting = kwargs.get("noise_settings", None)
+        if noise_setting is not None:
+            self.noise_sigma = noise_setting['std_noise']
 
         # Modify the action and observation spaces
         self.action_space = spaces.Box(
@@ -100,6 +102,18 @@ class DoFWrapper(gym.Wrapper):
 
         # Execute the action in the environment
         observation, reward, terminated, truncated, info = self.env.step(full_action)
+
+        # Generate observation noise
+        if hasattr(self, 'noise_sigma') and self.noise_sigma is not None:
+            print('Noise added')
+            observation_noise = np.zeros_like(observation)  # Ensure noise shape matches observation
+            # Apply Gaussian noise to the first 'DoF' elements of the observation
+            noise = np.random.randn(self.DoF) * self.noise_sigma
+            observation_noise[:self.DoF] = noise
+
+            # Add noise to the observation
+            observation += observation_noise
+            observation = np.clip(observation,-1, 1)
 
         # Focus only on the degrees of freedom for observations
         observation = observation[: self.DoF]
@@ -445,6 +459,8 @@ def load_env_config(env_config: str = 'config/environment_setting.yaml') -> Any:
     init_scaling = environment_settings['init_scaling']  # Default scaling factor is 1.0
     action_scale = environment_settings['action_scale']
 
+    noise_setting = environment_settings['noise_setting']
+
     # Initialize the base environment with the loaded task and maximum time
     base_env = AwakeSteering(
         task=verification_task,
@@ -458,7 +474,8 @@ def load_env_config(env_config: str = 'config/environment_setting.yaml') -> Any:
         boundary_conditions=boundary_conditions,
         init_scaling=init_scaling,
         action_scale=action_scale,
-        penalty_scaling=penalty_scaling
+        penalty_scaling=penalty_scaling,
+        noise_settings=noise_setting
     )
 
     logging.info("Environment initialized successfully.")

@@ -47,8 +47,8 @@ nr_validation_episodes = len(validation_seeds)  # Number of validation episodes
 # Select on algorithm
 algorithm = environment_settings['rl-settings']['algorithm']
 optimization_type = 'RL'
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Figures')
-save_folder_weights = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Weights', delete=True)
+save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_weights = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Weights', delete=True)
 
 
 if algorithm == 'TRPO':

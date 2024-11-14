@@ -49,8 +49,8 @@ policy_mpc = lambda x: model_predictive_control(x, mpc_horizon, action_matrix_sc
 optimization_type = 'MPC'
 algorithm = ''
 
-save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='Figures')
-save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, purpose='MPC_results')
+save_folder_figures = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='Figures')
+save_folder_results = make_experiment_folder(optimization_type, algorithm, environment_settings, task_name='MPC_results')
 save_name_results = os.path.join(save_folder_results, 'MPC_results.pkl')
 
 # Verify the external policy on the specific environment

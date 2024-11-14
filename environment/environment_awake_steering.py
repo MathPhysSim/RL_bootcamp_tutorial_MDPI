@@ -149,6 +149,8 @@ class AwakeSteering(gym.Env):
 
         self.verification_tasks_loc = kwargs.get("verification_tasks_loc", None)
 
+        self.noise_setting = kwargs.get('noise_setting', False)
+
     def setup_dimensions(self):
         """
         Set up the dimensions of the action and observation spaces based on the response matrices.
@@ -195,6 +197,7 @@ class AwakeSteering(gym.Env):
         """
         delta_kicks = np.clip(action, self.low_action, self.high_action)
         self.state += self.rmatrix.dot(delta_kicks)
+
         self.state = np.clip(self.state, self.low_observation, self.high_observation)
         return_state = self.state.copy()
 

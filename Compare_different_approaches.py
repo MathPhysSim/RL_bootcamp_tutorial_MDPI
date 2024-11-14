@@ -47,7 +47,7 @@ os.makedirs(save_folder, exist_ok=True)
 
 # Define the save folder for results
 save_folder_results = make_experiment_folder('MPC', '', environment_settings,
-                                             purpose='MPC_results', generate=False)
+                                             task_name='MPC_results', generate=False)
 save_folder_name_results = os.path.join(save_folder_results, 'MPC_results.pkl')
 
 # Check if save_folder_name_results exists

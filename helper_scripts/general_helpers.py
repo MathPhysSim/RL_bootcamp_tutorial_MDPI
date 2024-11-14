@@ -27,7 +27,7 @@ def make_experiment_folder(
     optimization_type: str,
     algorithm: str,
     environment_settings: Dict[str, Any],
-    purpose: str,
+    experiment_name: str,
     generate: bool = True,
     delete: bool = False
 ) -> str:
@@ -41,7 +41,7 @@ def make_experiment_folder(
             Must contain:
                 - "task_setting": Dict with "task_nr" key.
                 - "degrees-of-freedom": int.
-        purpose (str): The purpose or phase of the experiment (e.g., 'weights', 'results').
+        task_name (str): The purpose or phase of the experiment (e.g., 'weights', 'results').
         generate (bool, optional): Whether to create the directory if it does not exist. Defaults to True.
         delete (bool, optional): Whether to delete the existing directory before creating a new one. Defaults to False.
 
@@ -53,18 +53,28 @@ def make_experiment_folder(
         OSError: If the directory cannot be created or deleted.
     """
     try:
-        experiment_name = f'predefined_task_{environment_settings["task_setting"]["task_nr"]}'
+        task_name = f'predefined_task_{environment_settings["task_setting"]["task_nr"]}'
         degrees_of_freedom = environment_settings["degrees-of-freedom"]
     except KeyError as e:
         logger.error(f"Missing key in environment_settings: {e}")
         raise KeyError(f"Missing key in environment_settings: {e}")
+
+    base_folder = os.path.join(
+        'Results',
+        optimization_type,
+        algorithm,
+        experiment_name)
+
+    experiment_settings_name = os.path.join(base_folder, 'experiment_settings.pkl')
+    with open(experiment_settings_name, "wb") as f:
+        pickle.dump(environment_settings, f)
 
     save_folder = os.path.join(
         'results',
         optimization_type,
         algorithm,
         experiment_name,
-        purpose,
+        task_name,
         f'Dof_{degrees_of_freedom}'
     )
 
@@ -220,6 +230,20 @@ def create_trajectories(env, policy, episodes, seed_set=None):
 
     return trajectories
 
+def run_specific_test(env, policy,episodes,seed_set, **kwargs):
+    rewards_per_task, ep_len_per_task, actions_per_task, states_per_task = test_policy(env, policy,
+                                                                                       episodes,
+                                                                                       seed_set=seed_set)
+    if 'save_results' in kwargs:
+        save_folder_name_results = kwargs['save_results']
+        save_dict = {'rewards_per_task': rewards_per_task, 'ep_len_per_task': ep_len_per_task,
+                     'actions_per_task': actions_per_task, 'states_per_task': states_per_task}
+
+        # Save the dictionary to the file using pickle
+        with open(save_folder_name_results, "wb") as f:
+            pickle.dump(save_dict, f)
+
+    return rewards_per_task, ep_len_per_task, actions_per_task, states_per_task
 
 def verify_external_policy_on_specific_env(env, policies, episodes=50, **kwargs):
     labels = kwargs['policy_labels']
@@ -487,7 +511,7 @@ def load_latest_policy(environment_settings):
 
     # Construct the save folder path for weights
     save_folder_weights = make_experiment_folder(optimization_type, algorithm, environment_settings,
-                                                 purpose='Weights', generate=False)
+                                                 task_name='Weights', generate=False)
     # Get the list of files in the weights folder
     files = glob.glob(os.path.join(save_folder_weights, '*'))
     files.sort()
