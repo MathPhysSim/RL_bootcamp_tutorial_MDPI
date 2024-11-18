@@ -6,6 +6,7 @@ import os
 import pickle
 from datetime import datetime
 
+import numpy as np
 from matplotlib import pyplot as plt
 
 
@@ -69,17 +70,7 @@ for _ in range(5):
     states_per_task = save_dict.get('states_per_task')
     # print('states_per_task: ', states_per_task)
 
-# # Let's plot the episode lengths for simplicity. Adapt this for other metrics as needed.
-# plt.figure(figsize=(10, 5))
-# for i, ep_lengths in enumerate(ep_len_per_task):
-#     plt.plot(ep_lengths, label=f'Task {i+1}', drawstyle='steps-post', linewidth=2)
-#
-# plt.title('Episode Lengths per Task')
-# plt.xlabel('Episode')
-# plt.ylabel('Length of Episode')
-# plt.legend()
-# plt.grid(True)
-# plt.show()
+
 
 # Create a figure for plotting
 plt.figure(figsize=(10, 5))
@@ -97,6 +88,51 @@ for file_name in file_list:
 plt.title('Episode Lengths per Task')
 plt.xlabel('Episode')
 plt.ylabel('Length of Episode')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+
+
+file_list = sorted(
+    [f for f in os.listdir(save_folder_results) if f.startswith('experiment_results_') and f.endswith('.pkl')])
+rewards_all = []
+
+# Gather all cumulative rewards from each file
+for file_name in file_list:
+    with open(os.path.join(save_folder_results, file_name), 'rb') as file:
+        data = pickle.load(file)
+        rewards_per_task = data['rewards_per_task']
+
+        # Calculate cumulative rewards for each episode in each task
+        for rewards in rewards_per_task[0]:
+            print(rewards)
+            cumulative_rewards = np.cumsum(rewards)
+            rewards_all.append(cumulative_rewards)
+
+
+
+# Pad shorter reward arrays to have uniform lengths
+max_length = max(len(rewards) for rewards in rewards_all)
+rewards_all_padded = [np.pad(rewards, (0, max_length - len(rewards)), 'edge') for rewards in rewards_all]
+
+# Convert list to a NumPy array for easier manipulation
+rewards_all_array = np.array(rewards_all_padded)
+
+# Calculate mean and standard deviation across all tasks/iterations
+mean_rewards = np.mean(rewards_all_array, axis=0)
+std_rewards = np.std(rewards_all_array, axis=0)
+
+# Plotting
+plt.figure(figsize=(10, 5))
+steps = np.arange(max_length)  # assuming steps are 0-indexed and correspond to indices in the array
+plt.plot(steps, mean_rewards, label='Mean Cumulative Reward', color='blue')
+plt.fill_between(steps, mean_rewards - std_rewards, mean_rewards + std_rewards, color='blue', alpha=0.2,
+                 label='Standard Deviation')
+plt.title('Mean and Standard Deviation of Cumulative Rewards Over Steps')
+plt.xlabel('Step')
+plt.ylabel('Cumulative Reward')
 plt.legend()
 plt.grid(True)
 plt.show()
