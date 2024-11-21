@@ -1,0 +1,37 @@
+seed: 1234
+task_name: train_default
+log_dir: ./logs
+run_id: ${task_name}/${now:%Y-%m-%d_%H-%M-%S}
+checkpoint_path: ${hydra:runtime.output_dir}/checkpoints/
+env:
+  _target_: src.envs.awake.DoFWrapper
+  env:
+    _target_: src.envs.awake.AwakeSteering
+    task:
+      _target_: src.envs.helpers.load_predefined_task
+      task_nr: 0
+      task_location: ./environment/tasks/verification_tasks.pkl
+    MAX_TIME: 1000
+  DoF: 6
+  boundary_conditions: true
+  init_scaling: 0.9
+  action_scale: 1.0
+  penalty-scaling: 100.0
+  noise_setting:
+    std_noise: 0.5
+agent:
+  _target_: stable_baselines3.PPO
+  policy: MlpPolicy
+  env: ${env}
+  learning_rate: 0.0003
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.0
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  use_sde: false
+  sde_sample_freq: -1
