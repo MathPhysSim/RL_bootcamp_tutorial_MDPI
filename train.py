@@ -8,10 +8,10 @@ def main(cfg: DictConfig):
     
     # FIXXME - just for debut output
     env = hydra.utils.instantiate(cfg.env)
+    
     agent = hydra.utils.instantiate(cfg.agent)
-    # callbacks = instantiate_callbacks(cfg.callbacks) if "callbacks" in cfg else None
-    # return hydra.utils.call(cfg.learner, agent=agent, callback=callbacks)
-    pass
+    callbacks = instantiate_callbacks(cfg.callbacks) if "callbacks" in cfg else None
+    return hydra.utils.call(cfg.learner, agent=agent, callback=callbacks)
 
 
 if __name__ == "__main__":
