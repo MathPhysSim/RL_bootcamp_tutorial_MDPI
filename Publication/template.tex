@@ -1,9 +1,8 @@
 %  LaTeX support: latex@mdpi.com 
 %  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
-
 %=================================================================
 \documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
-
+\usepackage[utf8]{inputenc}
 %--------------------
 % Class Options:
 %--------------------
@@ -193,7 +192,7 @@ The template details the sections that can be used in a manuscript. Note that th
 % The order of the section titles is different for some journals. Please refer to the "Instructions for Authors” on the journal homepage.
 
 \section{Introduction}
-The CERN accelerator complex encompasses a diverse array of normal-conducting and superconducting linear and circular accelerators, employing both conventional and advanced acceleration techniques (see Fig. 1)\cite{ref-journal}. The AWAKE (Advanced Proton Driven Plasma Wakefield Acceleration Experiment) aims to utilize high-energy protons from CERN’s Super Proton Synchrotron (SPS) to generate plasma wakefields, which serve as a medium to accelerate injected electron bunches to high energies. Effective trajectory control is critical to aligning the electron beam precisely with the plasma channel for optimal acceleration performance. Recent advancements in numerical optimization methods, often augmented with machine learning, have driven progress in tasks such as automated device alignment and parameter optimization in free-electron lasers (FELs) \cite{ref-journal}. Reinforcement learning (RL) has emerged as a promising approach to further enhance efficiency in such optimization tasks by minimizing the exploration time needed for solution convergence.
+The CERN accelerator complex encompasses a diverse array of normal-conducting and superconducting linear and circular accelerators, employing both conventional and advanced acceleration techniques (see Fig. 1)\cite{Scheinker2020,KainVerena2023}. The AWAKE (Advanced Proton Driven Plasma Wakefield Acceleration Experiment) aims to utilize high-energy protons from CERN’s Super Proton Synchrotron (SPS) to generate plasma wakefields, which serve as a medium to accelerate injected electron bunches to high energies. Effective trajectory control is critical to aligning the electron beam precisely with the plasma channel for optimal acceleration performance. Recent advancements in numerical optimization methods, often augmented with machine learning, have driven progress in tasks such as automated device alignment and parameter optimization in free-electron lasers (FELs) \cite{ref-journal}. Reinforcement learning (RL) has emerged as a promising approach to further enhance efficiency in such optimization tasks by minimizing the exploration time needed for solution convergence.
 Traditional control strategies like Model Predictive Control (MPC) rely on predefined system models, effectively solving sequential decision-making problems when the model is accurate. Analytical inverse control methods, which compute control actions using inverted control matrices, offer simplicity but are less adaptable to dynamic system changes or model inaccuracies. Reinforcement learning, particularly model-free deep RL algorithms such as Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), does not require explicit system models, making it well-suited for environments with non-linearities and uncertainties. Meanwhile, model-based RL methods, such as those employing Gaussian Process-based MPC (GP-MPC), combine Gaussian Process regression for dynamic system learning with MPC for control. This hybrid approach integrates probabilistic modeling to account for uncertainties and non-linear behavior, enhancing robustness and adaptability. However, RL’s effectiveness is often constrained by challenges such as the availability of sufficient instrumentation for meaningful state observations and the need for high sample efficiency, as RL algorithms can require substantial interaction data for training. These constraints limit the applicability of RL in certain tasks and its deployment in accelerator control rooms.
 Our study focuses on investigating linear continuous Markov Decision Processes (MDPs) in the context of beam steering control. We address the challenges of applying various control strategies and explore their implementation in dynamic accelerator environments. Through extensive simulations, we compare the performance of RL agents with MPC and analytical control approaches, evaluating metrics such as reward accumulation, state deviations, and action efficiency.
 This paper is structured as follows: we begin with an overview of reinforcement learning in beam steering control, outlining key concepts, challenges, and algorithmic details. The testing section evaluates the sensitivities of different control strategies under scenarios involving measurement noise, deviations towards non-linear dynamics, and non-stationary behavior. Extensive simulations assess the performance of each method under these challenging conditions. In the discussion, we analyze the results in the context of the encountered challenges and lessons learned. Finally, the outlook highlights potential future directions and broader applications of the approaches explored in this study.
@@ -487,7 +486,9 @@ All appendix sections must be cited in the main text. In the appendices, Figures
 \begin{adjustwidth}{-\extralength}{0cm}
 %\printendnotes[custom] % Un-comment to print a list of endnotes
 
-\reftitle{References}
+% \reftitle{References}
+% \bibliographystyle{plain}
+\bibliography{References.bib}
 
 % Please provide either the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/) or the full name of the journal.
 % Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
@@ -500,33 +501,33 @@ All appendix sections must be cited in the main text. In the appendices, Figures
 %=====================================
 % References, variant B: internal bibliography
 %=====================================
-\begin{thebibliography}{999}
+% \begin{thebibliography}{999}
 % Reference 1
-\bibitem[Kain et al.(2020)]{ref-article}
-Kain, V.; Hirlander, S.; Goddard, B.; Velotti, F.M.; Zevi Della Porta, G.; Bruchon, N.; Valentino, G. Sample-efficient reinforcement learning for CERN accelerator control. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 124801. https://doi.org/10.1103/PhysRevAccelBeams.23.124801.
+% \bibitem[Kain et al.(2020)]{ref-article}
+% Kain, V.; Hirlander, S.; Goddard, B.; Velotti, F.M.; Zevi Della Porta, G.; Bruchon, N.; Valentino, G. Sample-efficient reinforcement learning for CERN accelerator control. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 124801. https://doi.org/10.1103/PhysRevAccelBeams.23.124801.
 % Reference 2
-\bibitem[Edelen et al.(2020)]{ref-article}
-Edelen, A.; Neveu, N.; Frey, M.; Huber, Y.; Mayes, C.; Adelmann, A. Machine learning for orders of magnitude speedup in multiobjective optimization of particle accelerator systems. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 044601. https://doi.org/10.1103/PhysRevAccelBeams.23.044601.
+% \bibitem[Edelen et al.(2020)]{ref-article}
+% Edelen, A.; Neveu, N.; Frey, M.; Huber, Y.; Mayes, C.; Adelmann, A. Machine learning for orders of magnitude speedup in multiobjective optimization of particle accelerator systems. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 044601. https://doi.org/10.1103/PhysRevAccelBeams.23.044601.
 
-% Reference 3
-\bibitem[Author3(year)]{ref-book2}
-Author 1, A.; Author 2, B. \textit{Book Title}, 3rd ed.; Publisher: Publisher Location, Country, 2008; pp. 154--196.
+% % Reference 3
+% \bibitem[Author3(year)]{ref-book2}
+% Author 1, A.; Author 2, B. \textit{Book Title}, 3rd ed.; Publisher: Publisher Location, Country, 2008; pp. 154--196.
 % Reference 4
-\bibitem[Author4(year)]{ref-unpublish}
-Author 1, A.B.; Author 2, C. Title of Unpublished Work. \textit{Abbreviated Journal Name} year, \textit{phrase indicating stage of publication (submitted; accepted; in press)}.
+% \bibitem[Author4(year)]{ref-unpublish}
+% Author 1, A.B.; Author 2, C. Title of Unpublished Work. \textit{Abbreviated Journal Name} year, \textit{phrase indicating stage of publication (submitted; accepted; in press)}.
 % Reference 5
-\bibitem[Author5(year)]{ref-communication}
-Author 1, A.B. (University, City, State, Country); Author 2, C. (Institute, City, State, Country). Personal communication, 2012.
+% \bibitem[Author5(year)]{ref-communication}
+% Author 1, A.B. (University, City, State, Country); Author 2, C. (Institute, City, State, Country). Personal communication, 2012.
 % Reference 6
-\bibitem[Author6(year)]{ref-proceeding}
-Author 1, A.B.; Author 2, C.D.; Author 3, E.F. Title of presentation. In Proceedings of the Name of the Conference, Location of Conference, Country, Date of Conference (Day Month Year); Abstract Number (optional), Pagination (optional).
+% [Author6(year)]{ref-proceeding}
+% Author 1, A.B.; Author 2, C.D.; Author 3, E.F. Title of presentation. In Proceedings of the Name of the Conference, Location of Conference, Country, Date of Conference (Day Month Year); Abstract Number (optional), Pagination (optional).
 % Reference 7
-\bibitem[Author7(year)]{ref-thesis}
-Author 1, A.B. Title of Thesis. Level of Thesis, Degree-Granting University, Location of University, Date of Completion.
+% \bibitem[Author7(year)]{ref-thesis}
+% Author 1, A.B. Title of Thesis. Level of Thesis, Degree-Granting University, Location of University, Date of Completion.
 % Reference 8
-\bibitem[Author8(year)]{ref-url}
-Title of Site. Available online: URL (accessed on Day Month Year).
-\end{thebibliography}
+% \bibitem[Author8(year)]{ref-url}
+% Title of Site. Available online: URL (accessed on Day Month Year).
+% \end{thebibliography}
 
 % If authors have biography, please use the format below
 %\section*{Short Biography of Authors}

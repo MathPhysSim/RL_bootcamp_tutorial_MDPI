@@ -1,0 +1,34 @@
+Title of the proposal Article
+Advanced Control Strategies for Beam Steering in the AWAKE Experiment: Integrating Model Predictive Control and Reinforcement Learning
+
+Contributing Authors
+Olga Mironova; Simon Hirlaender; Thomas Gallien; Lorenz Fischl
+
+Author Affiliations
+Olga Mironova, Simon Hirlaender - Paris Lodron University of Salzburg (PLUS); Thomas Gallien - Joanneum Research; Lorenz Fischl
+
+Abstract
+This paper investigates advanced control strategies for beam steering in the electron line of the AWAKE experiment at CERN.
+Precise control of the electron beam trajectory is essential for optimizing the acceleration process.
+We simulate this problem using a highly accurate model and conduct an in-depth comparison of various control approaches.
+Traditional Model Predictive Control (MPC) utilizes a priori knowledge of the system in the form of a model and is effective when this model is accurate. Analytical inverse control methods employ inverted control matrices for computing control actions, offering straightforward implementation but limited adaptability to changes in the system. Model-free deep reinforcement learning (RL) algorithms, specifically Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), do not require explicit system models and can adapt to non-linearities and uncertainties.
+In contrast, model-based RL using Gaussian Processes combined with MPC (GP-MPC) integrates Gaussian Process regression for learning the system's dynamics with MPC for control. This approach accounts for model uncertainties and non-linearities, providing a probabilistic framework that enhances robustness and adaptability.
+Our study examines the sensitivities of these control strategies within linear continuous Markov Decision Processes. Although the underlying models are linear, the problem introduces slight nonlinearities due to limitations in the action space and termination criteria. We further extend our analysis to scenarios involving measurement noise, deviations toward nonlinear dynamics, and nonstationary behavior. Through extensive simulations, we evaluate each method's performance under these challenging conditions.
+Our findings highlight the potential of advanced RL techniques, particularly those incorporating probabilistic modelling and planning, for real-world accelerator control. This work offers valuable insights into the application of non-linear control methods and reinforcement learning to complex, high-dimensional systems, underscoring the benefits of integrating learning-based approaches with traditional control strategies.
+
+Highlights
+-high-dimensional continuous control problem
+-real-world application in particle accelerator control
+-data-driven probabilistic model predictive control
+-comparison of analytical control methods and deep reinforcement learning
+
+- In depth comparison of model-based analytical and MPC approaches to purely data-driven RL in environments with slightly non-linear accelerator physics dynamics
+- RL policies show increased robustness under gradually altering system dynamics
+- RL maintained stable control under moderate noise-levels where MPC struggles
+-  RL policies generally exhibited delayed failure compared to MPC
+
+Tentative date for submitting the whole manuscript
+06.12.2024
+
+Personal information
+Artificial Intelligence and Human Interfaces, Paris Lodron University of Salzburg (PLUS), Salzburg, Austria
