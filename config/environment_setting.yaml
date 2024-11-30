@@ -115,6 +115,6 @@ validation-settings:
 task_setting:
   # Path to the file containing predefined tasks for verification.
   task_location: 'environment/tasks/verification_tasks.pkl'
-
+  task_generation: false
   # Task number to load from the task file.
   task_nr: 0

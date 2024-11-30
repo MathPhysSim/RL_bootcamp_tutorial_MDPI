@@ -1,0 +1,557 @@
+%  LaTeX support: latex@mdpi.com 
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+%=================================================================
+\documentclass[journal,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+\usepackage[utf8]{inputenc}
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% acoustics, actuators, addictions, admsci, adolescents, aerobiology, aerospace, agriculture, agriengineering, agrochemicals, agronomy, ai, air, algorithms, allergies, alloys, analytica, analytics, anatomia, animals, antibiotics, antibodies, antioxidants, applbiosci, appliedchem, appliedmath, applmech, applmicrobiol, applnano, applsci, aquacj, architecture, arm, arthropoda, arts, asc, asi, astronomy, atmosphere, atoms, audiolres, automation, axioms, bacteria, batteries, bdcc, behavsci, beverages, biochem, bioengineering, biologics, biology, biomass, biomechanics, biomed, biomedicines, biomedinformatics, biomimetics, biomolecules, biophysica, biosensors, biotech, birds, bloods, blsf, brainsci, breath, buildings, businesses, cancers, carbon, cardiogenetics, catalysts, cells, ceramics, challenges, chemengineering, chemistry, chemosensors, chemproc, children, chips, cimb, civileng, cleantechnol, climate, clinpract, clockssleep, cmd, coasts, coatings, colloids, colorants, commodities, compounds, computation, computers, condensedmatter, conservation, constrmater, cosmetics, covid, crops, cryptography, crystals, csmf, ctn, curroncol, cyber, dairy, data, ddc, dentistry, dermato, dermatopathology, designs, devices, diabetology, diagnostics, dietetics, digital, disabilities, diseases, diversity, dna, drones, dynamics, earth, ebj, ecologies, econometrics, economies, education, ejihpe, electricity, electrochem, electronicmat, electronics, encyclopedia, endocrines, energies, eng, engproc, entomology, entropy, environments, environsciproc, epidemiologia, epigenomes, est, fermentation, fibers, fintech, fire, fishes, fluids, foods, forecasting, forensicsci, forests, foundations, fractalfract, fuels, future, futureinternet, futurepharmacol, futurephys, futuretransp, galaxies, games, gases, gastroent, gastrointestdisord, gels, genealogy, genes, geographies, geohazards, geomatics, geosciences, geotechnics, geriatrics, grasses, gucdd, hazardousmatters, healthcare, hearts, hemato, hematolrep, heritage, higheredu, highthroughput, histories, horticulturae, hospitals, humanities, humans, hydrobiology, hydrogen, hydrology, hygiene, idr, ijerph, ijfs, ijgi, ijms, ijns, ijpb, ijtm, ijtpp, ime, immuno, informatics, information, infrastructures, inorganics, insects, instruments, inventions, iot, j, jal, jcdd, jcm, jcp, jcs, jcto, jdb, jeta, jfb, jfmk, jimaging, jintelligence, jlpea, jmmp, jmp, jmse, jne, jnt, jof, joitmc, jor, journalmedia, jox, jpm, jrfm, jsan, jtaer, jvd, jzbg, kidneydial, kinasesphosphatases, knowledge, land, languages, laws, life, liquids, literature, livers, logics, logistics, lubricants, lymphatics, machines, macromol, magnetism, magnetochemistry, make, marinedrugs, materials, materproc, mathematics, mca, measurements, medicina, medicines, medsci, membranes, merits, metabolites, metals, meteorology, methane, metrology, micro, microarrays, microbiolres, micromachines, microorganisms, microplastics, minerals, mining, modelling, molbank, molecules, mps, msf, mti, muscles, nanoenergyadv, nanomanufacturing,\gdef\@continuouspages{yes}} nanomaterials, ncrna, ndt, network, neuroglia, neurolint, neurosci, nitrogen, notspecified, %%nri, nursrep, nutraceuticals, nutrients, obesities, oceans, ohbm, onco, %oncopathology, optics, oral, organics, organoids, osteology, oxygen, parasites, parasitologia, particles, pathogens, pathophysiology, pediatrrep, pharmaceuticals, pharmaceutics, pharmacoepidemiology,\gdef\@ISSN{2813-0618}\gdef\@continuous pharmacy, philosophies, photochem, photonics, phycology, physchem, physics, physiologia, plants, plasma, platforms, pollutants, polymers, polysaccharides, poultry, powders, preprints, proceedings, processes, prosthesis, proteomes, psf, psych, psychiatryint, psychoactives, publications, quantumrep, quaternary, qubs, radiation, reactions, receptors, recycling, regeneration, religions, remotesensing, reports, reprodmed, resources, rheumato, risks, robotics, ruminants, safety, sci, scipharm, sclerosis, seeds, sensors, separations, sexes, signals, sinusitis, skins, smartcities, sna, societies, socsci, software, soilsystems, solar, solids, spectroscj, sports, standards, stats, std, stresses, surfaces, surgeries, suschem, sustainability, symmetry, synbio, systems, targets, taxonomy, technologies, telecom, test, textiles, thalassrep, thermo, tomography, tourismhosp, toxics, toxins, transplantology, transportation, traumacare, traumas, tropicalmed, universe, urbansci, uro, vaccines, vehicles, venereology, vetsci, vibration, virtualworlds, viruses, vision, waste, water, wem, wevj, wind, women, world, youth, zoonoticdis 
+% For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal. Changing "submit" to "accept" before posting will remove line numbers.
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by: 
+% abstract, addendum, article, book, bookreview, briefreport, casereport, comment, commentary, communication, conferenceproceedings, correction, conferencereport, entry, expressionofconcern, extendedabstract, datadescriptor, editorial, essay, erratum, hypothesis, interestingimage, obituary, opinion, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, systematicreview, supfile, technicalnote, viewpoint, guidelines, registeredreport, tutorial
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%------------------
+% moreauthors
+%------------------
+% If there is only one author the class option oneauthor should be used. Otherwise use the class option moreauthors.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. Remove "pdftex" for (1) compiling with LaTeX & dvi2pdf (if eps figures are used) or for (2) compiling with XeLaTeX.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2024}
+\copyrightyear{2024}
+%\externaleditor{Academic Editor: Firstname Lastname}
+\datereceived{ } 
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For corrected papers: "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Advancing Beam Steering Control: A Comparative Study of Reinforcement Learning and Model Predictive Techniques on CERN AWAKE}
+% Advanced Control Strategies for Beam Steering in the AWAKE Experiment: Integrating Model Predictive Control and Reinforcement Learning
+
+% MDPI internal command: Title for citation in the left column
+\TitleCitation{Title}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0002-2634-3437} % Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorB}{0009-0004-3402-8914} % Add \orcidB{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Simon Hirlaender $^{1,\dagger,\ddagger}$\orcidA{0000-0002-2634-3437}, Olga Mironova $^{2,\ddagger}$\orcidB{0009-0004-3402-8914}, Thomas Gallien $^{3,\ddagger}$\orcidB{0000-0003-3331-5917}, Lorenz Fischl $^{4,\ddagger}$\orcidB{0000-0002-7893-0641}}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Firstname Lastname, Firstname Lastname and Firstname Lastname}
+
+% MDPI internal command: Authors, for citation in the left column
+\AuthorCitation{Lastname, F.; Lastname, F.; Lastname, F.}
+% If this is a Chicago style journal: Lastname, Firstname, Firstname Lastname, and Firstname Lastname.
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Affiliation 1; e-mail@e-mail.com\\
+$^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
+
+% Contact information of the corresponding author
+\corres{Correspondence: e-mail@e-mail.com; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)}
+
+% Current address and/or shared authorship
+\firstnote{Current address: Affiliation.}  % Current address should not be the same as any items in the Affiliation section.
+\secondnote{These authors contributed equally to this work.}
+% The commands \thirdnote{} till \eighthnote{} are available for further notes
+
+%\simplesumm{} % Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\) 
+%\abstract{This paper explores advanced reinforcement learning (RL) techniques for beam steering control problems within a control-theoretical framework, using the AWAKE beam steering environment inspired by the CERN Advanced WAKe Field Experiment. We conduct a comprehensive comparison of various control approaches, including traditional Model Predictive Control (MPC), analytical methods utilizing response matrices, standard model-free RL algorithms like Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), and advanced model-based RL using Gaussian Process-based MPC (GP-MPC).
+%Our study focuses on understanding the dynamics of linear continuous Markov Decision Processes (MDPs) in the context of beam steering. We address the complexities involved in applying different control strategies and provide insights into implementing these methods effectively. Through extensive simulations, we evaluate the performance of RL agents against MPC and analytical approaches, analyzing key metrics such as reward accumulation, state deviations, and action efficiencies.
+%The results demonstrate that while traditional methods like MPC offer near-optimal solutions with strong performance guarantees, RL approaches provide greater flexibility and adaptability, especially in handling non-linearities and uncertainties. The GP-MPC method, in particular, combines the strengths of both model-based and model-free approaches, offering improved robustness and sample efficiency. Our findings highlight the potential of advanced RL techniques in real-world accelerator control scenarios and contribute valuable knowledge to the field of control theory and reinforcement learning applications.}
+% \abstract{This paper investigates advanced control strategies for beam steering in the electron line of the AWAKE experiment at CERN, which aims to demonstrate plasma wakefield acceleration driven by a high-energy proton beam. Precise control of the electron beam trajectory is essential for optimizing the acceleration process as it enters the plasma cell. We simulate this problem in a highly accurate model and conduct an in-depth comparison of various control approaches. 
+%  Traditional Model Predictive Control (MPC) utilizes a priori knowledge of the system in the form of a model and is effective when this model is accurate.
+% Analytical inverse control methods employ inverted control matrices for computing control actions, offering straightforward implementation but limited adaptability to changes in the system. Model-free deep reinforcement learning (RL) algorithms, specifically Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), do not require explicit system models and can adapt to non-linearities and uncertainties.
+% In contrast, model-based RL using Gaussian Processes and MPC (GP-MPC) combines Gaussian Process regression for learning the system's dynamics with MPC for control. This approach accounts for model uncertainties and nonlinearities, providing a probabilistic framework that enhances robustness and adaptability.\\
+% Our study focuses on the sensitivities of these control strategies within linear continuous Markov Decision Processes (MDPs) and extends to scenarios involving measurement noise, deviations towards non-linear dynamics, and nonstationary behavior. Through extensive simulations, we evaluate each method's performance under these challenging conditions.\\
+% The results demonstrate that while traditional MPC offers near-optimal solutions with strong performance guarantees when the model is accurate, its effectiveness diminishes in the presence of uncertainties and nonlinearities. Model-free RL methods exhibit enhanced flexibility and adaptability but may suffer from data inefficiency and lack theoretical guarantees.\\
+% Notably, the GP-MPC approach emerges as a powerful hybrid technique that integrates the predictive capabilities of MPC with the adaptability of Gaussian Process regression. This method effectively captures system nonlinearities and quantifies uncertainty, resulting in improved robustness, sample efficiency, and adaptability to nonstationary environments. GP-MPC bridges the gap between control-theoretical methods and model-free RL, demonstrating superior performance in dynamic and uncertain settings.\\
+% Our findings highlight the potential of advanced RL techniques, particularly those incorporating probabilistic modelling and planning, for real-world accelerator control. This work offers valuable insights into the application of non-linear control methods and reinforcement learning to complex, high-dimensional systems, underscoring the benefits of integrating learning-based approaches with traditional control strategies.}
+% \abstract{This paper investigates advanced control strategies for beam steering in the electron line of the AWAKE experiment at CERN.
+% Precise control of the electron beam trajectory is essential for optimizing the acceleration process.
+% We simulate this problem using a highly accurate model and conduct an in-depth comparison of various control approaches.\\
+% Traditional Model Predictive Control (MPC) utilizes a priori knowledge of the system in the form of a model and is effective when this model is accurate. Analytical inverse control methods employ inverted control matrices for computing control actions, offering straightforward implementation but limited adaptability to changes in the system. Model-free deep reinforcement learning (RL) algorithms, specifically Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), do not require explicit system models and can adapt to non-linearities and uncertainties.\\
+% In contrast, model-based RL using Gaussian Processes combined with MPC (GP-MPC) integrates Gaussian Process regression for learning the system's dynamics with MPC for control. This approach accounts for model uncertainties and non-linearities, providing a probabilistic framework that enhances robustness and adaptability.\\
+% Our study examines the sensitivities of these control strategies within linear continuous Markov Decision Processes. Although the underlying models are linear, the problem introduces slight nonlinearities due to limitations in the action space and termination criteria. We further extend our analysis to scenarios involving measurement noise, deviations toward nonlinear dynamics, and nonstationary behavior. Through extensive simulations, we evaluate each method's performance under these challenging conditions.\\
+% Our findings highlight the potential of advanced RL techniques, particularly those incorporating probabilistic modelling and planning, for real-world accelerator control. This work offers valuable insights into the application of non-linear control methods and reinforcement learning to complex, high-dimensional systems, underscoring the benefits of integrating learning-based approaches with traditional control strategies.}
+% Keywords
+\abstract{This paper investigates advanced control strategies for beam steering in the electron line of the AWAKE experiment at CERN. We employ a highly accurate physics-simulation and conduct an in-depth comparison of various control approaches. Model Predictive Control (MPC) utilizes a priori knowledge of the system in the form of a model and is effective with accurate models. Classical analytical inverse control methods use the inverted control matrices for computing control actions, offering straightforward implementation but a limited adaptability to changes. Deep reinforcement learning (RL) algorithms, specifically Proximal Policy Optimization (PPO), do not require explicit system models and can adapt to non-linearities and uncertainties. Finally, model-based RL using Gaussian Processes combined with MPC (GP-MPC) integrates GP regression for learning the system's dynamics with MPC for control. This approach accounts for model uncertainties and non-linearities, providing a probabilistic framework that enhances robustness and adaptability. Our study examines the sensitivities of these control strategies within linear continuous Markov Decision Processes. Although the underlying MDP is linear, the problem introduces slight nonlinearities due to limited actions and the termination criterion. Our analysis involves measurement noise, deviations toward nonlinear dynamics, and nonstationary. Through extensive simulations, we evaluate each method's performance under these challenging conditions. Our findings highlight the potential of RL techniques, particularly those incorporating probabilistic modelling and planning, for real-world accelerator control. This work offers valuable insights into the application of non-linear control methods and reinforcement learning to complex, high-dimensional systems.}
+\keyword{Reinforcement Learning, Control theory, Gaussian Data-driven Model Predictive Control (GP-MPC)} 
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Diversity
+%\LSID{\url{http://}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Applied Sciences
+%\featuredapplication{Authors are encouraged to provide a concise description of the specific application or a potential application of the work. This section is not mandatory.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Data
+%\dataset{DOI number or link to the deposited data set if the data set is published separately. If the data set shall be published as a supplement to this paper, this field will be filled by the journal editors. In this case, please submit the data set as a supplement.}
+%\datasetlicense{License under which the data set is made available (CC0, CC-BY, CC-BY-SA, CC-BY-NC, etc.)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Toxins
+%\keycontribution{The breakthroughs or highlights of the manuscript. Authors can write one or two sentences to describe the most important part of the paper.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Encyclopedia
+%\encyclopediadef{For entry manuscripts only: please provide a brief overview of the entry title instead of an abstract.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Only for the journal Advances in Respiratory Medicine and Smart Cities
+%\addhighlights{yes}
+%\renewcommand{\addhighlights}{%
+
+%\noindent This is an obligatory section in “Advances in Respiratory Medicine'' and ``Smart Cities”, whose goal is to increase the discoverability and readability of the article via search engines and other scholars. Highlights should not be a copy of the abstract, but a simple text allowing the reader to quickly and simplified find out what the article is about and what can be cited from it. Each of these parts should be devoted up to 2~bullet points.\vspace{3pt}\\
+%\textbf{What are the main findings?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}\vspace{3pt}
+%\textbf{What is the implication of the main finding?}
+% \begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+% \item First bullet.
+% \item Second bullet.
+% \end{itemize}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{-1} %% Remove this when starting to work on the template.
+\section{How to Use this Template}
+\begin{itemize}
+    \item @Olga: Understand the tutorial in detail, especially the code!
+    \item @Olga: Formulate possible case studies
+    \item @Simon: Guide to the overall process
+\end{itemize}
+The template details the sections that can be used in a manuscript. Note that the order and names of article sections may differ from the requirements of the journal (e.g., the positioning of the Materials and Methods section). Please check the instructions on the authors' page of the journal to verify the correct order and names. For any questions, please contact the editorial office of the journal or support@mdpi.com. For LaTeX-related questions please contact latex@mdpi.com.%\endnote{This is an endnote.} % To use endnotes, please un-comment \printendnotes below (before References). Only journal Laws uses \footnote.
+
+% The order of the section titles is different for some journals. Please refer to the "Instructions for Authors” on the journal homepage.
+
+\section{Introduction}
+The CERN accelerator complex encompasses a diverse array of normal-conducting and superconducting linear and circular accelerators, employing both conventional and advanced acceleration techniques (see Fig. 1)\cite{Scheinker2020,KainVerena2023}. The AWAKE (Advanced Proton Driven Plasma Wakefield Acceleration Experiment) aims to utilize high-energy protons from CERN’s Super Proton Synchrotron (SPS) to generate plasma wakefields, which serve as a medium to accelerate injected electron bunches to high energies. Effective trajectory control is critical to aligning the electron beam precisely with the plasma channel for optimal acceleration performance. Recent advancements in numerical optimization methods, often augmented with machine learning, have driven progress in tasks such as automated device alignment and parameter optimization in free-electron lasers (FELs) \cite{ref-journal}. Reinforcement learning (RL) has emerged as a promising approach to further enhance efficiency in such optimization tasks by minimizing the exploration time needed for solution convergence.
+Traditional control strategies like Model Predictive Control (MPC) rely on predefined system models, effectively solving sequential decision-making problems when the model is accurate. Analytical inverse control methods, which compute control actions using inverted control matrices, offer simplicity but are less adaptable to dynamic system changes or model inaccuracies. Reinforcement learning, particularly model-free deep RL algorithms such as Proximal Policy Optimization (PPO) and Trust Region Policy Optimization (TRPO), does not require explicit system models, making it well-suited for environments with non-linearities and uncertainties. Meanwhile, model-based RL methods, such as those employing Gaussian Process-based MPC (GP-MPC), combine Gaussian Process regression for dynamic system learning with MPC for control. This hybrid approach integrates probabilistic modeling to account for uncertainties and non-linear behavior, enhancing robustness and adaptability. However, RL’s effectiveness is often constrained by challenges such as the availability of sufficient instrumentation for meaningful state observations and the need for high sample efficiency, as RL algorithms can require substantial interaction data for training. These constraints limit the applicability of RL in certain tasks and its deployment in accelerator control rooms.
+Our study focuses on investigating linear continuous Markov Decision Processes (MDPs) in the context of beam steering control. We address the challenges of applying various control strategies and explore their implementation in dynamic accelerator environments. Through extensive simulations, we compare the performance of RL agents with MPC and analytical control approaches, evaluating metrics such as reward accumulation, state deviations, and action efficiency.
+This paper is structured as follows: we begin with an overview of reinforcement learning in beam steering control, outlining key concepts, challenges, and algorithmic details. The testing section evaluates the sensitivities of different control strategies under scenarios involving measurement noise, deviations towards non-linear dynamics, and non-stationary behavior. Extensive simulations assess the performance of each method under these challenging conditions. In the discussion, we analyze the results in the context of the encountered challenges and lessons learned. Finally, the outlook highlights potential future directions and broader applications of the approaches explored in this study.
+
+
+
+
+
+
+% The introduction should briefly place the study in a broad context and highlight why it is important. It should define the purpose of the work and its significance. The current state of the research field should be reviewed carefully and key publications cited. Please highlight controversial and diverging hypotheses when necessary. Finally, briefly mention the main aim of the work and highlight the principal conclusions. As far as possible, please keep the introduction comprehensible to scientists outside your particular field of research. Citing a journal paper \cite{ref-journal}. Now citing a book reference \cite{ref-book1,ref-book2} or other reference types \cite{ref-unpublish,ref-communication,ref-proceeding}. Please use the command \citep{ref-thesis,ref-url} for the following MDPI journals, which use author--date citation: Administrative Sciences, Arts, Econometrics, Economies, Genealogy, Humanities, IJFS, Journal of Intelligence, Journalism and Media, JRFM, Languages, Laws, Religions, Risks, Social Sciences, Literature.\\
+% How the paper is organised as follows.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem Setting and Preliminaries}
+\subsection{Problem set-up}
+Describe the real problem and the simulation. 
+The electron beamline of the AWAKE experiment provides an appropriate environment for the application of optimization algorithms to address the control problem of steering the beam along a specified target trajectory. This setting offers a unique opportunity to leverage advanced optimization techniques due to several constrains which make this    consists of consecutive elements
+\subsection{Mathematical description}
+Describe all details here. What is an MDP, how is our MDP desigend? What are critical aspects.
+How does the dynamics work....
+
+\section{Methods}
+
+Describe all approaches in detail with references and some overview of the advantages and disadvantages wrt our problem.
+Describe the experiments we want to conduct and why these test are done!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiments}
+\subsection{Baseline}
+\subsection{Results and Discussions}
+\subsection{Ablation Studies}
+
+% This section may be divided by subheadings. It should provide a concise and precise description of the experimental results, their interpretation as well as the experimental conclusions that can be drawn.
+% \subsection{Subsection}
+% \subsubsection{Subsubsection}
+
+% Bulleted lists look like this:
+% \begin{itemize}
+% \item	First bullet;
+% \item	Second bullet;
+% \item	Third bullet.
+% \end{itemize}
+
+% Numbered lists can be added as follows:
+% \begin{enumerate}
+% \item	First item; 
+% \item	Second item;
+% \item	Third item.
+% \end{enumerate}
+
+% The text continues here. 
+
+% \subsection{Figures, Tables and Schemes}
+
+% All figures and tables should be cited in the main text as Figure~\ref{fig1}, Table~\ref{tab1}, etc.
+
+% \begin{figure}[H]
+% \includegraphics[width=10.5 cm]{Definitions/logo-mdpi}
+% \caption{This is a figure. Schemes follow the same formatting. If there are multiple panels, they should be listed as: (\textbf{a}) Description of what is contained in the first panel. (\textbf{b}) Description of what is contained in the second panel. Figures should be placed in the main text near to the first time they are cited. A caption on a single line should be centred.\label{fig1}}
+% \end{figure}   
+% \unskip
+
+% \begin{table}[H] 
+% \caption{This is a table caption. Tables should be placed in the main text near to the first time they are~cited.\label{tab1}}
+% %\newcolumntype{C}{>{\centering\arraybackslash}X}
+% \begin{tabularx}{\textwidth}{CCC}
+% \toprule
+% \textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
+% \midrule
+% Entry 1		& Data			& Data\\
+% Entry 2		& Data			& Data \textsuperscript{1}\\
+% \bottomrule
+% \end{tabularx}
+% \noindent{\footnotesize{\textsuperscript{1} Tables may have a footer.}}
+% \end{table}
+
+% The text continues here (Figure~\ref{fig2} and Table~\ref{tab2}).
+
+% % Example of a figure that spans the whole page width. The same concept works for tables, too.
+% \begin{figure}[H]
+% \begin{adjustwidth}{-\extralength}{0cm}
+% \centering
+% \includegraphics[width=15.5cm]{Definitions/logo-mdpi}
+% \end{adjustwidth}
+% \caption{This is a wide figure.\label{fig2}}
+% \end{figure}  
+
+% \begin{table}[H]
+% \caption{This is a wide table.\label{tab2}}
+% 	\begin{adjustwidth}{-\extralength}{0cm}
+% %		\newcolumntype{C}{>{\centering\arraybackslash}X}
+% 		\begin{tabularx}{\fulllength}{CCCC}
+% 			\toprule
+% 			\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}     & \textbf{Title 4}\\
+% 			\midrule
+% \multirow[m]{3}{*}{Entry 1 *}	& Data			& Data			& Data\\
+% 			  	                   & Data			& Data			& Data\\
+% 			             	      & Data			& Data			& Data\\
+%                    \midrule
+% \multirow[m]{3}{*}{Entry 2}    & Data			& Data			& Data\\
+% 			  	                  & Data			& Data			& Data\\
+% 			             	     & Data			& Data			& Data\\
+%                    \midrule
+% \multirow[m]{3}{*}{Entry 3}    & Data			& Data			& Data\\
+% 			  	                 & Data			& Data			& Data\\
+% 			             	    & Data			& Data			& Data\\
+%                   \midrule
+% \multirow[m]{3}{*}{Entry 4}   & Data			& Data			& Data\\
+% 			  	                 & Data			& Data			& Data\\
+% 			             	    & Data			& Data			& Data\\
+% 			\bottomrule
+% 		\end{tabularx}
+% 	\end{adjustwidth}
+% 	\noindent{\footnotesize{* Tables may have a footer.}}
+% \end{table}
+
+%\begin{listing}[H]
+%\caption{Title of the listing}
+%\rule{\columnwidth}{1pt}
+%\raggedright Text of the listing. In font size footnotesize, small, or normalsize. Preferred format: left aligned and single spaced. Preferred border format: top border line and bottom border line.
+%\rule{\columnwidth}{1pt}
+%\end{listing}
+
+% Text.
+
+% Text.
+
+% \subsection{Formatting of Mathematical Components}
+
+% This is the example 1 of equation:
+% \begin{linenomath}
+% \begin{equation}
+% a = 1,
+% \end{equation}
+% \end{linenomath}
+% the text following an equation need not be a new paragraph. Please punctuate equations as regular text.
+%% If the documentclass option "submit" is chosen, please insert a blank line before and after any math environment (equation and eqnarray environments). This ensures correct linenumbering. The blank line should be removed when the documentclass option is changed to "accept" because the text following an equation should not be a new paragraph.
+
+% This is the example 2 of equation:
+% \begin{adjustwidth}{-\extralength}{0cm}
+% \begin{equation}
+% a = b + c + d + e + f + g + h + i + j + k + l + m + n + o + p + q + r + s + t + u + v + w + x + y + z
+% \end{equation}
+% \end{adjustwidth}
+
+% Example of a page in landscape format (with table and table footnote).
+%\startlandscape
+%\begin{table}[H] %% Table in wide page
+%\caption{This is a very wide table.\label{tab3}}
+%	\begin{tabularx}{\textwidth}{CCCC}
+%		\toprule
+%		\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}	& \textbf{Title 4}\\
+%		\midrule
+%		Entry 1		& Data			& Data			& This cell has some longer content that runs over two lines.\\
+%		Entry 2		& Data			& Data			& Data\textsuperscript{1}\\
+%		\bottomrule
+%	\end{tabularx}
+%	\begin{adjustwidth}{+\extralength}{0cm}
+%		\noindent\footnotesize{\textsuperscript{1} This is a table footnote.}
+%	\end{adjustwidth}
+%\end{table}
+%\finishlandscape
+
+
+% Please punctuate equations as regular text. Theorem-type environments (including propositions, lemmas, corollaries etc.) can be formatted as follows:
+% %% Example of a theorem:
+% \begin{Theorem}
+% Example text of a theorem.
+% \end{Theorem}
+
+% The text continues here. Proofs must be formatted as follows:
+
+% %% Example of a proof:
+% \begin{proof}[Proof of Theorem 1]
+% Text of the proof. Note that the phrase ``of Theorem 1'' is optional if it is clear which theorem is being referred to.
+% \end{proof}
+% The text continues here.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+Authors should discuss the results and how they can be interpreted from the perspective of previous studies and of the working hypotheses. The findings and their implications should be discussed in the broadest context possible. Future research directions may also be highlighted.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+This section is not mandatory, but can be added to the manuscript if the discussion is unusually long or complex.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \section{Patents}
+
+% This section is not mandatory, but may be added if there are patents resulting from the work reported in this manuscript.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
+
+% Only for journal Methods and Protocols:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title. A supporting video article is available at doi: link.}
+
+% Only for journal Hardware:
+% If you wish to submit a video article, please do so with any other supplementary material.
+% \supplementary{The following supporting information can be downloaded at: \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.\vspace{6pt}\\
+%\begin{tabularx}{\textwidth}{lll}
+%\toprule
+%\textbf{Name} & \textbf{Type} & \textbf{Description} \\
+%\midrule
+%S1 & Python script (.py) & Script of python source code used in XX \\
+%S2 & Text (.txt) & Script of modelling code used to make Figure X \\
+%S3 & Text (.txt) & Raw data from experiment X \\
+%S4 & Video (.mp4) & Video demonstrating the hardware in use \\
+%... & ... & ... \\
+%\bottomrule
+%\end{tabularx}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work~reported.}
+
+\funding{Please add: ``This research received no external funding'' or ``This research was funded by NAME OF FUNDER grant number XXX.'' and  and ``The APC was funded by XXX''. Check carefully that the details given are accurate and use the standard spelling of funding agency names at \url{https://search.crossref.org/funding}, any errors may affect your future funding.}
+
+\institutionalreview{In this section, you should add the Institutional Review Board Statement and approval number, if relevant to your study. You might choose to exclude this statement if the study did not require ethical approval. Please note that the Editorial Office might ask you for further information. Please add “The study was conducted in accordance with the Declaration of Helsinki, and approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving humans. OR “The animal study protocol was approved by the Institutional Review Board (or Ethics Committee) of NAME OF INSTITUTE (protocol code XXX and date of approval).” for studies involving animals. OR “Ethical review and approval were waived for this study due to REASON (please provide a detailed justification).” OR “Not applicable” for studies not involving humans or animals.}
+
+\informedconsent{Any research article describing a study involving humans should contain this statement. Please add ``Informed consent was obtained from all subjects involved in the study.'' OR ``Patient consent was waived due to REASON (please provide a detailed justification).'' OR ``Not applicable'' for studies not involving humans. You might also choose to exclude this statement if the study did not involve humans.
+
+Written informed consent for publication must be obtained from participating patients who can be identified (including by the patients themselves). Please state ``Written informed consent has been obtained from the patient(s) to publish this paper'' if applicable.}
+
+\dataavailability{We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.} 
+
+% Only for journal Nursing Reports
+%\publicinvolvement{Please describe how the public (patients, consumers, carers) were involved in the research. Consider reporting against the GRIPP2 (Guidance for Reporting Involvement of Patients and the Public) checklist. If the public were not involved in any aspect of the research add: ``No public involvement in any aspect of this research''.}
+
+% Only for journal Nursing Reports
+%\guidelinesstandards{Please add a statement indicating which reporting guideline was used when drafting the report. For example, ``This manuscript was drafted against the XXX (the full name of reporting guidelines and citation) for XXX (type of research) research''. A complete list of reporting guidelines can be accessed via the equator network: \url{https://www.equator-network.org/}.}
+
+% Only for journal Nursing Reports
+%\useofartificialintelligence{Please describe in detail any and all uses of artificial intelligence (AI) or AI-assisted tools used in the preparation of the manuscript. This may include, but is not limited to, language translation, language editing and grammar, or generating text. Alternatively, please state that “AI or AI-assisted tools were not used in drafting any aspect of this manuscript”.}
+
+\acknowledgments{In this section you can acknowledge any support given which is not covered by the author contribution or funding sections. This may include administrative and technical support, or donations in kind (e.g., materials used for experiments).}
+
+% \conflictsofinterest{Declare conflicts of interest or state ``The authors declare no conflicts of interest.'' Authors must identify and declare any personal circumstances or interest that may be perceived as inappropriately influencing the representation or interpretation of reported research results. Any role of the funders in the design of the study; in the collection, analyses or interpretation of data; in the writing of the manuscript; or in the decision to publish the results must be declared in this section. If there is no role, please state ``The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results''.} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+%% Only for journal Encyclopedia
+%\entrylink{The Link to this entry published on the encyclopedia platform.}
+
+\abbreviations{Abbreviations}{
+The following abbreviations are used in this manuscript:\\
+
+\noindent 
+\begin{tabular}{@{}ll}
+MDPI & Multidisciplinary Digital Publishing Institute\\
+DOAJ & Directory of open access journals\\
+TLA & Three letter acronym\\
+LD & Linear dichroism
+\end{tabular}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+\appendixtitles{no} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+\appendixstart
+\appendix
+\section[\appendixname~\thesection]{}
+\subsection[\appendixname~\thesubsection]{}
+The appendix is an optional section that can contain details and data supplemental to the main text---for example, explanations of experimental details that would disrupt the flow of the main text but nonetheless remain crucial to understanding and reproducing the research shown; figures of replicates for experiments of which representative data are shown in the main text can be added here if brief, or as Supplementary Data. Mathematical proofs of results not central to the paper can be added as an appendix.
+
+\begin{table}[H] 
+\caption{This is a table caption.\label{tab5}}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\begin{tabularx}{\textwidth}{CCC}
+\toprule
+\textbf{Title 1}	& \textbf{Title 2}	& \textbf{Title 3}\\
+\midrule
+Entry 1		& Data			& Data\\
+Entry 2		& Data			& Data\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section[\appendixname~\thesection]{}
+All appendix sections must be cited in the main text. In the appendices, Figures, Tables, etc. should be labeled, starting with ``A''---e.g., Figure A1, Figure A2, etc.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{adjustwidth}{-\extralength}{0cm}
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+% \reftitle{References}
+% \bibliographystyle{plain}
+\bibliography{References.bib}
+
+% Please provide either the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/) or the full name of the journal.
+% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
+
+%=====================================
+% References, variant A: external bibliography
+%=====================================
+%\bibliography{your_external_BibTeX_file}
+
+%=====================================
+% References, variant B: internal bibliography
+%=====================================
+% \begin{thebibliography}{999}
+% Reference 1
+% \bibitem[Kain et al.(2020)]{ref-article}
+% Kain, V.; Hirlander, S.; Goddard, B.; Velotti, F.M.; Zevi Della Porta, G.; Bruchon, N.; Valentino, G. Sample-efficient reinforcement learning for CERN accelerator control. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 124801. https://doi.org/10.1103/PhysRevAccelBeams.23.124801.
+% Reference 2
+% \bibitem[Edelen et al.(2020)]{ref-article}
+% Edelen, A.; Neveu, N.; Frey, M.; Huber, Y.; Mayes, C.; Adelmann, A. Machine learning for orders of magnitude speedup in multiobjective optimization of particle accelerator systems. {\em Phys. Rev. Accel. Beams} {\bf 2020}, {\em 23}, 044601. https://doi.org/10.1103/PhysRevAccelBeams.23.044601.
+
+% % Reference 3
+% \bibitem[Author3(year)]{ref-book2}
+% Author 1, A.; Author 2, B. \textit{Book Title}, 3rd ed.; Publisher: Publisher Location, Country, 2008; pp. 154--196.
+% Reference 4
+% \bibitem[Author4(year)]{ref-unpublish}
+% Author 1, A.B.; Author 2, C. Title of Unpublished Work. \textit{Abbreviated Journal Name} year, \textit{phrase indicating stage of publication (submitted; accepted; in press)}.
+% Reference 5
+% \bibitem[Author5(year)]{ref-communication}
+% Author 1, A.B. (University, City, State, Country); Author 2, C. (Institute, City, State, Country). Personal communication, 2012.
+% Reference 6
+% [Author6(year)]{ref-proceeding}
+% Author 1, A.B.; Author 2, C.D.; Author 3, E.F. Title of presentation. In Proceedings of the Name of the Conference, Location of Conference, Country, Date of Conference (Day Month Year); Abstract Number (optional), Pagination (optional).
+% Reference 7
+% \bibitem[Author7(year)]{ref-thesis}
+% Author 1, A.B. Title of Thesis. Level of Thesis, Degree-Granting University, Location of University, Date of Completion.
+% Reference 8
+% \bibitem[Author8(year)]{ref-url}
+% Title of Site. Available online: URL (accessed on Day Month Year).
+% \end{thebibliography}
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+% For the MDPI journals use author-date citation, please follow the formatting guidelines on http://www.mdpi.com/authors/references
+% To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
+% To cite two works by the same author with specific pages: \citeauthor{ref-journal-3a} (\citeyear{ref-journal-3a}, p. 328; \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+\end{adjustwidth}
+\end{document}
+
