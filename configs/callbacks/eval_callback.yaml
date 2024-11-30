@@ -1,0 +1,22 @@
+  
+eval_callback:
+  _target_: stable_baselines3.common.callbacks.EvalCallback
+  eval_env:
+    _target_: stable_baselines3.common.vec_env.VecNormalize
+    venv:
+      _target_: stable_baselines3.common.env_util.make_vec_env
+      env_id:
+        _target_: gymnasium.make
+        _partial_: true
+        id: ${env.id}-${env.version}
+      n_envs: 1
+      seed: ${seed}
+      wrapper_class: ${env.wrapper_class}
+      wrapper_kwargs: ${env.wrapper_kwargs}
+  best_model_save_path: ${checkpoint_path}/best_model
+  log_path: ${checkpoint_path}/logs
+  n_eval_episodes: 10
+  eval_freq:  12500
+  deterministic: true
+  render: false
+

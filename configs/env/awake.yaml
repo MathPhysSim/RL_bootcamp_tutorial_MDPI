@@ -1,29 +1,27 @@
-_target_: src.envs.awake.DoFWrapper
-env: 
-  _target_: src.envs.awake.AwakeSteering
-  task:
-    # Load a predefined task for verification
-    _target_: src.envs.helpers.load_predefined_task
-    task_nr: 0
-    task_location: ./environment/tasks/verification_tasks.pkl
+id: AwakeSteering
+version: v0
 
-  MAX_TIME: 1000
+register:
+  _target_: gymnasium.envs.registration.register
+  id: ${env.id}-${env.version} 
+  entry_point: src.envs.awake:${env.id}
+  max_episode_steps: 1000     
+  order_enforce: True
+  kwargs:
+    task:
+      _target_: src.envs.helpers.load_predefined_task
+      task_nr: 0
+      task_location: ./environment/tasks/verification_tasks.pkl
+    init_scaling: 0.9         # Initial Scaling: Scaling factor applied to initial observations to normalize state values.
 
-DoF: 6
+wrapper_class:
+  _target_: src.envs.awake.DoFWrapper
+  _partial_: true
 
-# Whether to enforce boundary conditions on beam positions.
-boundary_conditions: true
-
-# Initial Scaling: Scaling factor applied to initial observations to normalize state values.
-init_scaling: 0.9
-
-# Action Scale: Scaling factor applied to actions to control the magnitude of control inputs.
-action_scale: 1.0
-
-# Scaling factor applied to penalties when boundary conditions are violated.
-penalty-scaling: 100.0
-
-# Note: Modify these settings only if necessary.
-noise_setting:
-  # Standard deviation of noise added to observations. Set to 'none' to disable noise.
-  std_noise: 0.5
+wrapper_kwargs:
+  DoF: 6                      # Number of degrees of freedom
+  boundary_conditions: true   # Whether to enforce boundary conditions on beam positions.
+  action_scale: 1.0           # Scaling factor applied to actions to control the magnitude of control inputs.
+  penalty-scaling: 100.0      # Scaling factor applied to penalties when boundary conditions are violated.
+  noise_setting:              
+    std_noise: 0.5            # Standard deviation of noise added to observations. Set to 'none' to disable noise.

@@ -13,5 +13,7 @@ class RewardLoggerCallback(BaseCallback):
     def _on_rollout_end(self) -> None:
         episode_return = sum(self.rewards) / len(self.rewards)
         self.logger.record('episode_return', episode_return)
+        
+        # FIXXME - just for debug output
         print("episode_return = ", episode_return )
         self.rewards = []
