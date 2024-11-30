@@ -131,9 +131,25 @@ class AwakeSteering(gym.Env):
         """
         super().__init__()
         self.__version__ = "1.0"
-        self.MAX_TIME = kwargs.get("MAX_TIME", 100)
+        
+        
+        
+        # FIXXME
+        # Maximum number of steps should be defined by the registry (max_episode_steps).
+        # This wraps environment with a TimeLimit Wrapper 
+        # self.MAX_TIME = kwargs.get("MAX_TIME", 100)
+        
+        
+        
         self.boundary_conditions = kwargs.get("boundary_conditions", False)
         self.state_scale = 1.0
+
+        # FIXXME
+        # init_scaling has been defined in the wrapper class.
+        # Consequently, the envirionment doesn't work without a wrapper which 
+        # is huge nogo.
+        self.init_scaling = kwargs.get("init_scaling", 1.0)
+
 
         self.threshold = -0.1  # Corresponds to 1 mm scaled.
 
@@ -209,9 +225,18 @@ class AwakeSteering(gym.Env):
 
         self.current_steps += 1
         done = reward > self.threshold
-        truncated = self.current_steps >= self.MAX_TIME
-        if truncated:
-            done = True
+        
+        # FIXXME
+        # Let TimeLimit Wrappers cut the epispde insted
+        truncated = False
+        # truncated = self.current_steps >= self.MAX_TIME
+        
+        
+        # FIXXME 
+        # It's not a good practive to set done at the end of the episode even
+        # though the criteria has not been met.
+        # if truncated:
+        #     done = True
 
         # Find all indices where the absolute value of return_state exceeds or equals 1
         violations = np.argwhere(np.abs(return_state) >= 1).flatten()
@@ -349,7 +374,14 @@ class DoFWrapper(gym.Wrapper):
         self.DoF = DoF
         self.threshold = kwargs.get("threshold", -0.1)
         self.boundary_conditions = kwargs.get("boundary_conditions", False)
-        self.env.init_scaling = kwargs.get("init_scaling", 1.0)
+        
+        
+        # FIXXME
+        # A wrapper class should never modify members of the wrapped object!
+        # If this env.init_scaling should be parameterized, do it in the enviornment class
+        # self.env.init_scaling = kwargs.get("init_scaling", 1.0)
+        
+        
         self.action_scale = kwargs.get("action_scale", 1.0)
         self.penalty_scaling = kwargs.get("penalty_scaling", 1.0)
         noise_setting = kwargs.get("noise_settings", None)
@@ -424,11 +456,25 @@ class DoFWrapper(gym.Wrapper):
         observation = observation[: self.DoF]
 
         # Update the reward based on the current observation
-        reward = self.env._get_reward(observation)
+        
+        
+        # FIXXME
+        # Wrapper methods should not call private methods. Besided we got the reward already 
+        # from the step method before. This is pretty much a design flaw and shows that 
+        # DoFWrapper is not suited to wrap the environment as it is deals rather with a subset
+        # of functionality and should thus be an inherted class from AwakeSteering.
+        # As a quick fix we copy the code from AwakeSteering but the inheritance concept need to
+        # be redefined!
+        # reward = self.env._get_reward(observation)
+        reward = -np.sqrt(np.mean(np.square(observation)))
 
         # Check for termination based on the reward threshold
-        if reward >= self.threshold:
-            terminated = True
+
+        # FIXXME 
+        # More elegant and easier to read ...
+        # if reward >= self.threshold:
+        #     terminated = True
+        terminated = reward >= self.threshold
 
         # Check for any violations where the absolute values in observations exceed 1
         violations = np.where(np.abs(observation) >= 1)[0]
@@ -438,7 +484,13 @@ class DoFWrapper(gym.Wrapper):
             observation[first_violation:] = np.sign(observation[first_violation])
 
             # Recalculate reward after modification
-            reward = self.env._get_reward(observation) * self.penalty_scaling
+            
+            # FIXXME 
+            # Why to call the env reward function again here? We have already computed the 
+            # reward above. Calling private methods of the env member crashes whe gym envs
+            # are wrapped.
+            #reward = self.env._get_reward(observation) * self.penalty_scaling
+            reward *= self.penalty_scaling
 
             # Terminate if boundary conditions are set
             terminated = self.boundary_conditions
