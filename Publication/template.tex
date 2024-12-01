@@ -207,16 +207,61 @@ This paper is structured as follows: we begin with an overview of reinforcement 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Problem Setting and Preliminaries}
 \subsection{Problem set-up}
-Describe the real problem and the simulation. 
-The electron beamline of the AWAKE experiment provides an appropriate environment for the application of optimization algorithms to address the control problem of steering the beam along a specified target trajectory. This setting offers a unique opportunity to leverage advanced optimization techniques due to several constrains which make this    consists of consecutive elements
+The electron beamline of the AWAKE experiment provides an appropriate environment for the application of optimization algorithms to address the control problem of steering the beam along a specified target trajectory. This setting offers a unique opportunity to leverage advanced optimization techniques due to several constrains which make this problem complex: actions are bounded to satisfy physical limitations for the safety, and the successful termination below threshold. 
 \subsection{Mathematical description}
-Describe all details here. What is an MDP, how is our MDP desigend? What are critical aspects.
+Mathematical framework Markov Decision Process Describe all details here. What is an MDP, how is our MDP desigend? What are critical aspects.
 How does the dynamics work....
+\subsection{Mathematical Description}
+
+The beam steering problem can be presented as a Markov Decision Process (MDP), a framework defined by the tuple $(\mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma, \rho)$, where $\mathcal{S}$ is the state space, $\mathcal{A}$ is the action space, $\mathcal{P}(s_{t+1} \mid s_t, a_t)$ is the state transition probability, $\mathcal{R}(s_t, a_t)$ is the reward function, and $\gamma \in [0,1]$ is the discount factor. In this problem, the state $\mathbf{s}_t \in \mathbb{R}^N$ represents the deviations of the electron beam's trajectory from the desired target at time $t$, where $N$ denotes the number of degrees of freedom in the beamline. The action $\mathbf{a}_t \in \mathbb{R}^N$ corresponds to the adjustments applied to the beamline magnets, constrained to $a_{i,t} \in [a_{\text{min}}, a_{\text{max}}]$. The reward function is defined as $\mathcal{R}(\mathbf{s}_t) = -\sqrt{\frac{1}{N} \sum_{i=1}^N s_{i,t}^2}$, encouraging minimization of the trajectory deviations. The system dynamics, which are linear time-invariant, are characterized by $\mathbf{s}_{t+1} = \mathbf{B} \mathbf{a}_t + \mathbf{I} \mathbf{s}_t + \text{noise term}$, where $\mathbf{B}$ is the response matrix mapping actions to state changes, and $\mathbf{I}$ is the identity matrix. The environment operates in an episodic manner, where each episode consists of a sequence of interactions (changes in $\mathbf{a}_t$) until termination criteria are met. Episodes terminate under one of the following criteria: (1) truncation after a maximal number of interactions, (2) successful termination when the root mean square (RMS) of the states falls below the measurement uncertainty, or (3) unsuccessful termination if any state exceeds the beam pipe boundaries. Actions $\mathbf{a}_t \in \mathcal{A}$ are bounded to satisfy physical constraints, ensuring safety. The successful termination condition, involving measurements below a threshold, introduces non-linearities and renders the problem non-trivial. This formulation, incorporating high-dimensional state and action spaces, physical constraints, and stochastic elements, provides a comprehensive yet tractable representation of the beam steering problem, supporting advanced control strategies such as Model Predictive Control (MPC) and Reinforcement Learning (RL).
+
+
 
 \section{Methods}
 
 Describe all approaches in detail with references and some overview of the advantages and disadvantages wrt our problem.
 Describe the experiments we want to conduct and why these test are done!
+\subsection{Analytical Approach}
+
+
+The Analytical Approach is a control strategy that employs a mathematically rigorous framework based on classical control theory to solve beam steering problems. The foundation of this method lies in the response matrix $\mathbf{B}$, which encapsulates the linear dynamics of the system. This matrix represents how control actions, $\mathbf{a}_t$, influence the state transitions of the system, $\mathbf{s}_{t+1}$. For linear time-invariant systems, the dynamics can be expressed as:
+
+\[
+\mathbf{s}_{t+1} = \mathbf{B} \mathbf{a}_t + \mathbf{I} \mathbf{s}_t + \text{noise term},
+\]
+
+where $\mathbf{I}$ is the identity matrix and the noise term accounts for system uncertainties. Using this relationship, the Analytical Approach determines control actions through the inverse of the response matrix:
+
+\[
+\mathbf{a}_t = \mathbf{B}^{-1} \mathbf{s}_t.
+\]
+
+This direct computation provides an explicit solution for the actions required to bring the system to a desired state.
+
+The key advantage of the Analytical Approach is its computational efficiency. By leveraging the inverse of the response matrix, this method avoids iterative optimization, making it significantly faster than other approaches such as reinforcement learning or nonlinear optimization. Additionally, its deterministic nature ensures that the solution is stable and reproducible under the assumption of accurate system modeling. For problems like beam steering, where linear dynamics dominate and real-time adjustments are critical, the Analytical Approach offers a practical solution.
+
+However, the method has notable limitations. First, the assumption of linearity restricts its applicability to systems where nonlinear effects are minimal. In beam steering, for example,
+
+\subsection{Model Predictive Control (MPC) Approach}
+
+Model Predictive Control (MPC) is a robust and adaptive control method that calculates control actions by solving an optimization problem over a finite prediction horizon. This approach relies on an internal model of the system dynamics to predict future states and determine the optimal sequence of control actions. The MPC process can be broken into three steps: Predict, Optimize, and Implement.
+
+First, MPC uses the system's model to predict the future states of the beam based on current measurements and anticipated control actions. This prediction is performed over a specified prediction horizon, which is a finite number of steps into the future. Second, it formulates an optimization problem to minimize a predefined cost function, such as the difference between the predicted beam position and the desired trajectory (reference trajectory), while satisfying system constraints. The optimization problem is typically expressed as:
+
+\[
+\max_{\{a_t\}} \mathbb{E}_{W_t} \left[ \sum_{t=0}^{H-1} R(S_t, A_t, W_t) + V(S_H) \right],
+\]
+
+where $R(S_t, A_t, W_t)$ is the reward function at time $t$, $V(S_H)$ represents the terminal cost at the end of the horizon, and $H$ is the prediction horizon. The constraints ensure that the control actions $\mathbf{a}_t$ remain within physical safety limits and system dynamics, $S_{t+1} = f(S_t, A_t, W_t)$, are respected. Finally, MPC implements only the first control action from the optimized sequence, then repeats the process with updated measurements and predictions in a receding horizon manner. MPC provides significant benefits for beam steering applications. Firstly, it enables real-time adjustments by continuously updating predictions and control actions, making it highly responsive to environmental disturbances or dynamic changes in the system. Secondly, MPC effectively handles constraints, such as the physical limits on actuator movements or safety thresholds for beam angles, ensuring system integrity. Thirdly, its predictive nature improves precision by proactively correcting deviations from the desired trajectory before they become significant. This capability is particularly advantageous in maintaining accurate beam alignment in scenarios requiring high precision. 
+Despite its strengths, MPC presents certain challenges. A major limitation is its computational complexity, as real-time optimization can be demanding for fast-moving systems like beam steering. High computational requirements may necessitate advanced hardware or specialized algorithms to ensure timely execution. Another drawback is the heavy reliance on an accurate system model. Any discrepancies between the model and the actual system dynamics can degrade the control performance. Furthermore, tuning the MPC parameters, such as the prediction horizon or cost weights, is non-trivial and requires expertise in both control theory and the specifics of the beam steering system.
+MPC is a powerful control strategy for beam steering, balancing adaptability, precision, and constraint handling. It is especially effective in dynamic environments where real-time control and predictive capabilities are crucial. While its computational demands and dependency on accurate modeling are notable challenges, advances in computational power and modeling techniques continue to make MPC increasingly feasible for real-world applications. The figure below illustrates the core concepts of MPC, highlighting the prediction horizon and the iterative optimization process:
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{path_to_image}
+	\caption{Illustration of the MPC Framework: Prediction, Optimization, and Implementation}
+	\label{fig:MPC_diagram}
+\end{figure}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
