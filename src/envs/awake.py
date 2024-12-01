@@ -119,7 +119,17 @@ class AwakeSteering(gym.Env):
 
     metadata = {"render_modes": []}
 
-    def __init__(self, twiss=None, task=None, train=False, **kwargs):
+    def __init__(
+        self,
+        boundary_conditions: bool = False,
+        init_scaling: float = 1.0,
+        plane: Any = Plane.horizontal,
+        seed: Optional[int] = None,
+        twiss: Optional[Any] = None,        # FIXXME: doesn't seem to be used by the AwakeSteering class
+        task: Optional[Any] = None,         
+        train: bool = False,                # FIXXME: doesn't seem to be used by the AwakeSteering class
+        #**kwargs,
+        ):
         """
         Initialize the AwakeSteering environment.
 
@@ -140,15 +150,19 @@ class AwakeSteering(gym.Env):
         # self.MAX_TIME = kwargs.get("MAX_TIME", 100)
         
         
+        # FIXXME
+        # Initializer arguments should be defined in the signature of the initializer.
+        # Taking the kwargs dictionary instead is a bit of a abuse complicates the usage if the
+        # class as it isn't appearent out of the initializer signature 
+        #self.boundary_conditions = kwargs.get("boundary_conditions", False)
+        self.boundary_conditions = boundary_conditions
         
-        self.boundary_conditions = kwargs.get("boundary_conditions", False)
         self.state_scale = 1.0
 
         # FIXXME
-        # init_scaling has been defined in the wrapper class.
-        # Consequently, the envirionment doesn't work without a wrapper which 
-        # is huge nogo.
-        self.init_scaling = kwargs.get("init_scaling", 1.0)
+        # init_scaling has been defined in the wrapper class only.
+        # Consequently, the envirionment doesn't work without a wrapper which huge nogo.
+        self.init_scaling = init_scaling
 
 
         self.threshold = -0.1  # Corresponds to 1 mm scaled.
@@ -156,10 +170,20 @@ class AwakeSteering(gym.Env):
         self.current_episode = -1
         self.current_steps = 0
 
-        seed = kwargs.get('seed', None)
+        # FIXXME
+        # Initializer arguments should be defined in the signature of the initializer.
+        # Taking the kwargs dictionary instead is a bit of a abuse complicates the usage if the
+        # class as it isn't appearent out of the initializer signature 
         self.seed(seed)
         self.maml_helper = DynamicsHelper()
-        self.plane = kwargs.get("plane", Plane.horizontal)
+        
+            
+        # FIXXME
+        # Initializer arguments should be defined in the signature of the initializer.
+        # Taking the kwargs dictionary instead is a bit of a abuse complicates the usage if the
+        # class as it isn't appearent out of the initializer signature 
+        # self.plane = kwargs.get("plane", Plane.horizontal)
+        self.plane = plane
 
         if task is None:
             task = self.maml_helper.get_origin_task()
@@ -167,9 +191,16 @@ class AwakeSteering(gym.Env):
 
         self.setup_dimensions()
 
-        self.verification_tasks_loc = kwargs.get("verification_tasks_loc", None)
 
-        self.noise_setting = kwargs.get('noise_setting', False)
+        # FIXXE
+        # self.verification_tasks_loc is not used anywhere in the code and is thus obsolete
+        # self.verification_tasks_loc = kwargs.get("verification_tasks_loc", None)
+
+
+        # FIXXME
+        # self.noise_setting is only used in the DoF wrapper class. If a property is only required
+        # in the wrapper class than it should be defined there
+        # self.noise_setting = kwargs.get('noise_setting', False)
 
     def setup_dimensions(self):
         """
@@ -227,13 +258,13 @@ class AwakeSteering(gym.Env):
         done = reward > self.threshold
         
         # FIXXME
-        # Let TimeLimit Wrappers cut the epispde insted
+        # Let TimeLimit Wrappers cut the epispde instead
         truncated = False
         # truncated = self.current_steps >= self.MAX_TIME
         
         
         # FIXXME 
-        # It's not a good practive to set done at the end of the episode even
+        # It's not a good practice to set done at the end of the episode even
         # though the criteria has not been met.
         # if truncated:
         #     done = True
@@ -285,7 +316,13 @@ class AwakeSteering(gym.Env):
             self.observation_space.seed(seed)
         self.is_finalized = False
         self.current_steps = 0
+        
+        # FIXXME 
+        # It doesn't really make much sense for the environment to track wich episode it's in.
+        # Suggest to remvove.
         self.current_episode += 1
+        
+        
         self.state = np.clip(self.observation_space.sample(), -1, 1)*self.init_scaling
         return_state = self.state.copy()
         return return_state, {}
@@ -353,6 +390,172 @@ class AwakeSteering(gym.Env):
         """
         return self._task
 
+
+class DoFAwakeSteering(AwakeSteering):
+    def __init__(
+        self,
+        DoF: int,
+        threshold: float = -0.1,
+        action_scale: float = 1.0,
+        penalty_scaling: float = 1.0,
+        noise_setting: Optional[dict] = None,
+        *args,
+        **kwargs,
+        ):
+        
+        super().__init__(*args, **kwargs)
+        
+        self.DoF = DoF
+        self.threshold = threshold
+        self.action_scale = action_scale
+        self.penalty_scaling = penalty_scaling
+        
+        if noise_setting is not None:
+            self.noise_sigma = noise_setting['std_noise']
+
+        # Modify the action and observation spaces
+        self._full_action_space = self.action_space
+        self.action_space = spaces.Box(
+            low=self.action_space.low[:DoF],
+            high=self.action_space.high[:DoF],
+            dtype=self.action_space.dtype,
+        )
+        self._full_observation_space = self.observation_space
+        self.observation_space = spaces.Box(
+            low=self.observation_space.low[:DoF],
+            high=self.observation_space.high[:DoF],
+            dtype=self.observation_space.dtype,
+        )
+        
+    def swap_spaces(self):
+        observation_space = self.observation_space
+        action_space = self.action_space
+        self.observation_space = self._full_observation_space
+        self.action_space = self._full_action_space
+        return action_space, observation_space
+
+
+    def reset(
+        self, seed: Optional[int] = None, options: Optional[Dict[str, Any]] = None
+    ):
+        """
+        Reset the environment and return the initial observation limited to the specified DoF.
+
+        Args:
+            seed: Optional seed for the environment.
+            options: Optional dictionary of options.
+
+        Returns:
+            observation: The initial observation limited to the specified DoF.
+            info: Additional information from the environment.
+        """
+        
+        # Swap observation and action spaces as the base env depends on it
+        observation_space, action_space = self.swap_spaces()
+        observation, info = super().reset(seed=seed, options=options)
+        self.observation_space = observation_space
+        self.action_space = action_space
+        
+        
+        observation = observation[: self.DoF]
+        return observation, info
+    
+
+    def step(self, action: np.ndarray):
+        """
+        Step the environment with the given action, limited to the specified DoF.
+
+        Args:
+            action: The action to take, limited to the DoF.
+
+        Returns:
+            observation: The observation after the action, limited to the DoF.
+            reward: The reward after the action.
+            terminated: Whether the episode has terminated.
+            truncated: Whether the episode was truncated.
+            info: Additional information from the environment.
+        """
+
+        observation_space, action_space = self.swap_spaces()
+        
+        # Initialize a zero-filled array for the full action space
+        full_action = np.zeros(self.action_space.shape, dtype=self.action_space.dtype)
+        full_action[: self.DoF] = action  # Set the first 'DoF' elements with the provided action
+
+        # Execute the action in the environment
+        observation, reward, terminated, truncated, info = super().step(full_action)
+
+        self.observation_space = observation_space
+        self.action_space = action_space
+        
+        # Generate observation noise
+        if hasattr(self, 'noise_sigma') and self.noise_sigma is not None:
+            observation_noise = np.zeros_like(observation)  # Ensure noise shape matches observation
+            # Apply Gaussian noise to the first 'DoF' elements of the observation
+            noise = np.random.randn(self.DoF) * self.noise_sigma
+            observation_noise[:self.DoF] = noise
+
+            # Add noise to the observation
+            observation += observation_noise
+            observation = np.clip(observation,-1, 1)
+
+        # Focus only on the degrees of freedom for observations
+        observation = observation[: self.DoF]
+
+        # Update the reward based on the current observation 
+        reward = self._get_reward(observation)
+
+        # Check for termination based on the reward threshold
+        terminated = terminated or reward >= self.threshold
+
+        # Check for any violations where the absolute values in observations exceed 1
+        violations = np.where(np.abs(observation) >= 1)[0]
+        if violations.size > 0:
+            # Modify observation from the first violation onward
+            first_violation = violations[0]
+            observation[first_violation:] = np.sign(observation[first_violation])
+
+            # Recalculate reward after modification
+            reward *= self.penalty_scaling
+
+            # Terminate if boundary conditions are set
+            terminated = self.boundary_conditions
+
+        return observation, reward, terminated, truncated, info
+    
+    
+
+    # Optional function, not currently used
+    def pot_function(self, x: np.ndarray, k: float = 1000, x0: float = 1) -> np.ndarray:
+        """
+        Compute a potential function using a modified sigmoid to handle deviations.
+        The output scales transformations symmetrically for positive and negative values of x.
+
+        Args:
+            x: Input array.
+            k: Steepness of the sigmoid.
+            x0: Center point of the sigmoid.
+
+        Returns:
+            Transformed array with values scaled between 1 and 11.
+        """
+        # Precompute the exponential terms to use them efficiently.
+        exp_pos = np.exp(k * (x - x0))
+        exp_neg = np.exp(k * (-x - x0))
+
+        # Calculate the transformation symmetrically for both deviations
+        result = (1 - 1 / (1 + exp_pos)) + (1 - 1 / (1 + exp_neg))
+
+        # Scale and shift the output between 1 and 11
+        return 1 + 10 * result
+    
+    
+    
+    
+    
+    
+    
+    
 
 class DoFWrapper(gym.Wrapper):
     """

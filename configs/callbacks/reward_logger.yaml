@@ -1,2 +1,0 @@
-reward_logger:
-  _target_: src.callbacks.reward_logger.RewardLoggerCallback
