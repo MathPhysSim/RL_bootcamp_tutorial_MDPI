@@ -8,10 +8,9 @@ env:
       _target_: gymnasium.make
       _partial_: true
       id: ${env.id}-${env.version}
-    n_envs: 4
+    n_envs: 1
     seed: ${seed}
-    wrapper_class: ${env.wrapper_class}
-    wrapper_kwargs: ${env.wrapper_kwargs}
+    env_kwargs: ${env.env_kwargs}
   gamma: ${agent.gamma}
   norm_reward: true
   training: true
