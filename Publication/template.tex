@@ -208,6 +208,22 @@ This paper is structured as follows: we begin with an overview of reinforcement 
 \section{Problem Setting and Preliminaries}
 \subsection{Problem set-up}
 \noindent Here you descibe  the real problem. Use the paper \cite{KainVerena2023} and try top understand all details of the problem. What is the basic physics? How do we simulate the problem? What are the limitations? Read about beam steering in general. What is a dipole magnet, what is a quadrupole magnet? What is a BPM? Add citations. Try to think about different interesting scenarios you want to probe.\\\\
+\section{Beam Steering Problem in the AWAKE Electron Line}
+The practical application of RL in accelerator control presents several challenges alongside its promising potential. These challenges include low sampling efficiency, safety constraints, system non-stationarity, and state space observability. Recent researches have demonstrated the successful application of various RL approaches to address some of these issues\citep{Hirlaender2023, Kain2020, Kain2022, Scheinker2020}, highlighting the feasibility of implementing RL for accelerator control tasks. The benchmark (see Fig.~\ref{fig:beam_steering}) for these studies was the electron line of the AWAKE experiment, where accurate simulations of the electron beam were used to test optimization and control algorithms. The objective in this episodic task is to minimize the distance between the initial beam trajectory and a target trajectory as fast as possible.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{Figures/AWAKE_steering_image.png}
+	\caption{Illustration of a beam steering problem as in the
+		AWAKE electron line}
+	\label{fig:beam_steering}
+\end{figure}
+
+In this environment, ten dipole magnets are used to steer the beam, defining the control actions \(a\), while ten beam position monitors measure the trajectory, forming the state \(s\). The reward \(r\) is defined as the negative root mean square (RMS) value of the distance to the target trajectory. The episode is deemed successful if the RMS distance falls below a threshold of \(-1~\text{mm}\). Conversely, the episode ends unsuccessfully if the beam hits the wall, defined as any state where the position is \(\leq -1~\text{cm}\) or \(\geq 1~\text{cm}\). 
+
+Each episode is initialized such that the RMS of the distance to the target trajectory lies between \(0.7~\text{cm}\) and \(0.8~\text{cm}\). All states and actions are normalized to the range \([-1, 1]\), ensuring that the task is sufficiently challenging and operates close to safety boundaries to test the robustness of safety constraints.
+
+
 The electron beamline of the AWAKE experiment provides an appropriate environment for the application of optimization algorithms to address the control problem of steering the beam along a specified target trajectory. This setting offers a unique opportunity to leverage advanced optimization techniques due to several constrains which make this problem complex: actions are bounded to satisfy physical limitations for the safety, and the successful termination below threshold. 
 \subsection{Mathematical description}
 Mathematical framework Markov Decision Process Describe all details here. What is an MDP, how is our MDP desigend? What are critical aspects.
@@ -251,15 +267,6 @@ First, MPC uses the system's model to predict the future states of the beam base
 where $R(S_t, A_t, W_t)$ is the reward function at time $t$, $V(S_H)$ represents the terminal cost at the end of the horizon, and $H$ is the prediction horizon. The constraints ensure that the control actions $\mathbf{a}_t$ remain within physical safety limits and system dynamics, $S_{t+1} = f(S_t, A_t, W_t)$, are respected. Finally, MPC implements only the first control action from the optimized sequence, then repeats the process with updated measurements and predictions in a receding horizon manner. MPC provides significant benefits for beam steering applications. Firstly, it enables real-time adjustments by continuously updating predictions and control actions, making it highly responsive to environmental disturbances or dynamic changes in the system. Secondly, MPC effectively handles constraints, such as the physical limits on actuator movements or safety thresholds for beam angles, ensuring system integrity. Thirdly, its predictive nature improves precision by proactively correcting deviations from the desired trajectory before they become significant. This capability is particularly advantageous in maintaining accurate beam alignment in scenarios requiring high precision. 
 Despite its strengths, MPC presents certain challenges. A major limitation is its computational complexity, as real-time optimization can be demanding for fast-moving systems like beam steering. High computational requirements may necessitate advanced hardware or specialized algorithms to ensure timely execution. Another drawback is the heavy reliance on an accurate system model. Any discrepancies between the model and the actual system dynamics can degrade the control performance. Furthermore, tuning the MPC parameters, such as the prediction horizon or cost weights, is non-trivial and requires expertise in both control theory and the specifics of the beam steering system.
 MPC is a powerful control strategy for beam steering, balancing adaptability, precision, and constraint handling. It is especially effective in dynamic environments where real-time control and predictive capabilities are crucial. While its computational demands and dependency on accurate modeling are notable challenges, advances in computational power and modeling techniques continue to make MPC increasingly feasible for real-world applications. The figure below illustrates the core concepts of MPC, highlighting the prediction horizon and the iterative optimization process:
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=\textwidth]{Figures/AWAKE_steering_image.png}
-	\caption{Illustration of the MPC Framework: Prediction, Optimization, and Implementation}
-	\label{fig:MPC_diagram}
-\end{figure}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiments}
 \subsection{Baseline}
