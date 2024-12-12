@@ -59,3 +59,7 @@ target_kl: 0.01
     
 # Factor for sub-sampling the batch to reduce computation time. Can reduce computation time at the cost of using less data.
 sub_sampling_factor: 1
+
+verbose: 1
+tensorboard_log: ${log_dir}/tensorboard
+seed: ${seed}
