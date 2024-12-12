@@ -8,7 +8,7 @@ env:
       _target_: gymnasium.make
       _partial_: true
       id: ${env.id}-${env.version}
-    n_envs: 1
+    n_envs: ${num_train_envs}
     seed: ${seed}
     env_kwargs: ${env.env_kwargs}
   gamma: ${agent.gamma}

@@ -1,0 +1,31 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example_experiment
+
+
+defaults:
+  - override /agent: trpo # let's change the agent config to another file
+
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+# always good to have a good unique name for experiment so we can find the results in logs/ again
+task_name: "example_experiment"
+
+# since we changed the agent we may also need to change the number of training environments
+num_train_envs: 2
+
+
+# change some paramters in the environment config
+env:
+  env_kwargs:
+    DoF: 8
+
+# just for demostration purposes we change parts of the config we have overridden in the default list
+agent:
+  target_kl: 0.012
+
+
+

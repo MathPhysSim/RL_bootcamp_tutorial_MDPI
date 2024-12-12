@@ -10,6 +10,8 @@ defaults:
 
 seed: 1234
 
+num_train_envs: 4
+
 task_name: "train_default"
 log_dir: ./logs
 
