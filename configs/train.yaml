@@ -25,4 +25,4 @@ hydra:
     subdir: ${hydra.job.num}
 
 checkpoint_path: ${hydra:runtime.output_dir}/checkpoints/
-
+tensorboard_dir: ${hydra:runtime.output_dir}/tensorboard

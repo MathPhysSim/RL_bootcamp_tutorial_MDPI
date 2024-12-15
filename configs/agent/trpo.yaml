@@ -61,5 +61,5 @@ target_kl: 0.01
 sub_sampling_factor: 1
 
 verbose: 1
-tensorboard_log: ${log_dir}/tensorboard
+tensorboard_log: ${tensorboard_dir}
 seed: ${seed}
