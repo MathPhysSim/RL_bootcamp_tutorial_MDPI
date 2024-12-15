@@ -1,0 +1,18 @@
+# @package _global_
+defaults:
+  - override /agent: ppo
+
+
+hydra:
+  mode: "MULTIRUN"
+  sweeper:
+    params:
+      env.env_kwargs.DoF: 6, 7, 8
+      agent.batch_size: 64, 128
+
+
+learner:
+  total_timesteps: 100000
+
+task_name: "DoF_gridsearch"
+
