@@ -1,7 +1,7 @@
 
 # Configuration File for RL Bootcamp Tutorial
 # Degrees of Freedom: Specifies the number of control inputs and observed states in the environment.
-degrees-of-freedom: 6
+degrees-of-freedom: 1
 
 # Terminal Conditions: Defines conditions under which an episode ends.
 terminal-conditions:
@@ -17,7 +17,7 @@ terminal-conditions:
 # MPC (Model Predictive Control) Settings: Parameters for the MPC algorithm.
 mpc-settings:
   # Length of the prediction horizon for MPC.
-  horizon-length: 8
+  horizon-length: 4
 
   # Tolerance for convergence in the MPC solver.
   tol: 1.0e-16
@@ -98,7 +98,7 @@ rl-settings:
 # Note: Modify these settings only if necessary.
 noise_setting:
   # Standard deviation of noise added to observations. Set to 'none' to disable noise.
-  std_noise: 0.5
+  std_noise: 0.1
 
 # Initial Scaling: Scaling factor applied to initial observations to normalize state values.
 init_scaling: 0.9

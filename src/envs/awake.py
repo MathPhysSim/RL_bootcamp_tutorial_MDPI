@@ -4,6 +4,7 @@ from enum import Enum
 from typing import Optional, Dict, Any
 
 import gymnasium as gym
+import pandas as pd
 from gymnasium import Wrapper
 import numpy as np
 from cpymad.madx import Madx

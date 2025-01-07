@@ -10,9 +10,9 @@ register:
 
 env_kwargs: 
   DoF: 6                      # Number of degrees of freedom
-  boundary_conditions: true   # Whether to enforce boundary conditions on beam positions.
+  boundary_conditions: false   # Whether to enforce boundary conditions on beam positions.
   action_scale: 1.0           # Scaling factor applied to actions to control the magnitude of control inputs.
-  penalty_scaling: 100.0      # Scaling factor applied to penalties when boundary conditions are violated.
+  penalty_scaling: 1.0      # Scaling factor applied to penalties when boundary conditions are violated.
   noise_setting:              
     std_noise: 0.5            # Standard deviation of noise added to observations. Set to 'none' to disable noise.
   task:

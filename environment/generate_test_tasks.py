@@ -52,6 +52,7 @@ norm = colors.Normalize(vmin=global_min, vmax=global_max)
 
 for nr, task in enumerate(tasks_new):
     a = task['goal'][0]
+    print('A:', a)
     im = axs[nr].matshow(a, aspect='equal', norm=norm)
     axs[nr].set_title(f"Task {nr+1}")
 
@@ -65,7 +66,7 @@ cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
 fig.colorbar(im, cax=cbar_ax)
 
 plt.tight_layout(rect=[0, 0, 0.8, 1])
-plt.savefig(verification_tasks_loc + '/overview_responses_tasks_valid.pdf')
+# plt.savefig(verification_tasks_loc + '/overview_responses_tasks_valid.pdf')
 plt.show()
 
 

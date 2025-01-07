@@ -1,9 +1,5 @@
 from src.envs.awake import AwakeSteering, DoFWrapper, DoFAwakeSteering
 
-
-
-
-
 if __name__ == "__main__":
     seed = 1234
     

@@ -1,18 +1,25 @@
 # @package _global_
 defaults:
   - override /agent: ppo
-
-
+  - override /hydra/launcher: ray
 hydra:
   mode: "MULTIRUN"
+  launcher:
+    ray:
+      remote:
+        num_cpus: 16
+      init:
+        local_mode: false # set this to true for debug purposes (runs everything sequential then)
+
   sweeper:
     params:
-      env.env_kwargs.DoF: 6, 7, 8
-      agent.batch_size: 64, 128
+      env.env_kwargs.DoF: 2
+      seed: 1234, 5678, 91011, 1
 
+#      agent.batch_size: 64, 128
 
 learner:
-  total_timesteps: 100000
+  total_timesteps: 1000000
 
-task_name: "DoF_gridsearch"
+task_name: "Seeds_gridsearch"
 
